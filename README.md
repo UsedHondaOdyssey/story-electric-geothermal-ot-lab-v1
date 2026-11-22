@@ -1,6 +1,3 @@
-# story-electric-geothermal-ot-lab-v1
-Run a geothermal power plant in your browser and learn OT/IT security. Walk the plant, operate the HMI, power the town, trace packets, edit live firewall rules, follow Kerberos &amp; MFA, hunt in SOC logs and see NERC CIP mapped to real controls. Or turn off the safeties and blow it all up. Free, open source, built with Claude.
-
 # ⚡ Story Electric · Geothermal OT/IT Security Lab
 
 **Run a power plant. Keep the lights on. Or turn off the safeties and blow it all up, and learn OT security along the way.**
@@ -90,6 +87,6 @@ practitioners are especially welcome.
 
 ## 📄 License
 Released under the [MIT License](LICENSE). Free to use, copy, modify and share, including commercially,
-as long as the copyright notice is kept. © 2026 YOUR NAME
+as long as the copyright notice is kept. © 2026 UsedHondaOdyssey
 
 3D rendering by [three.js](https://threejs.org) (MIT License).
