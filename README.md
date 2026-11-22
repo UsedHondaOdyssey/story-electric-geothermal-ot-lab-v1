@@ -5,7 +5,7 @@ Run a geothermal power plant in your browser and learn OT/IT security. Walk the 
 
 **Run a power plant. Keep the lights on. Or turn off the safeties and blow it all up, and learn OT security along the way.**
 
-**[▶ Play in your browser](https://YOUR-USERNAME.github.io/YOUR-REPO/)** · free, no install, no login
+**[![▶ Play the Lab](https://img.shields.io/badge/▶_Play_the_Lab-Live_in_your_browser-00c2ff?style=for-the-badge)](https://usedhondaodyssey.github.io/story-electric-geothermal-ot-lab-v1/)** · free, no install, no login
 Works best in a desktop browser (Chrome, Edge, Firefox, Safari); touch controls on phones and tablets.
 
 Story Electric is a fictional geothermal power plant you can walk through, run and break, to learn how
