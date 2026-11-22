@@ -49,7 +49,7 @@ simulation; it's a hands-on, gamified way to learn the basics.
 - 🔍 **Hunt in SOC logs** with an XQL-style query console
 - 🗂️ **Run OT security operations:** asset inventory, vulnerability triage, patching, change management,
   and USB media control
-- 📜 **See NERC CIP mapped to the lab,** with a live audit-readiness score
+- 📜 **See NERC CIP mapped to the lab,** with a live score of which controls the lab meets
 
 Built with [Claude](https://claude.ai). Feel free to fork it, modify it to your heart's content, or reach out with ideas!
 
