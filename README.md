@@ -12,6 +12,27 @@ Story Electric is a fictional geothermal power plant you can walk through, run a
 operational technology (OT) and IT work together, and how they're secured. It's not a comprehensive
 simulation; it's a hands-on, gamified way to learn the basics.
 
+## 🎬 See it in action
+
+| 📦 Ride a packet: HMI → SCADA → PLC → cooling tower | 💥 Safeties off + breaker opened under load |
+|---|---|
+| ![Packet ride](previews/packet-ride.gif) | ![Generator explosion](previews/generator-explosion.gif) |
+| **🌀 Unit 1 start-up: the turbine spins up and syncs to the grid** | **🚀 Find the hidden RPG… and bring the building down** |
+| ![Turbine spin-up](previews/turbine-spinup.gif) | ![RPG destruction](previews/rpg-destruction.gif) |
+
+<details>
+<summary><b>📸 More screenshots</b></summary>
+
+| | |
+|---|---|
+| ![Purdue map](previews/map.png) **Purdue model map** | ![3D stack](previews/3d-stack.png) **3D network stack** |
+| ![HMI](previews/hmi.png) **Operator HMI** | ![Incident card](previews/incident-card.png) **What failed, and which protection would have stopped it** |
+| ![Remote MFA](previews/remote-mfa.png) **Remote access: VPN + MFA number matching** | ![Firewall editor](previews/firewall-editor.png) **Firewall editor with live flows** |
+| ![SOC](previews/soc-xql.png) **SOC hunting with XQL-style queries** | ![NERC CIP](previews/nerc-cip.png) **NERC CIP mapped to the lab** |
+| ![OT security desk](previews/ot-security-desk.png) **OT security desk** | |
+
+</details>
+
 ## 🎮 Play
 - ⚡ **Power the neighborhood:** start up the plant, sync to the grid and watch the town's lights come on
 - 💥 **Break it:** turn off the safety protections, push the plant past its limits, and watch the turbine,
