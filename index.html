@@ -4018,32 +4018,46 @@ function folShow(){const F=FOL,st=F.steps[F.i],n=F.names?{ic:'',n:F.names[F.i]}:
   document.getElementById('folN').onclick=folNext;document.getElementById('folX').onclick=endFollow;
   const sk=document.getElementById('folSkip');if(sk)sk.onclick=endFollow;}
 function folNext(){const F=FOL;if(!F)return;if(F.i>=F.path.length-1)return endFollow();
-  F.seg=F.segsPre?F.segsPre[F.i]:folSeg(F.path[F.i],F.path[F.i+1]);F.len=Math.max(1,F.seg.getLength());F.speed=F.segsPre?Math.min(40,Math.max(6,F.len/5)):Math.min(12,Math.max(5,F.len/6));F.t=0;F.paused=false;F.boost=false;F.i++;
+  F.seg=smoothSeg(F.segsPre?F.segsPre[F.i]:folSeg(F.path[F.i],F.path[F.i+1]));F.len=Math.max(1,F.seg.getLength());F.speed=F.segsPre?Math.min(40,Math.max(6,F.len/5)):Math.min(12,Math.max(5,F.len/6));F.t=0;F.st=0;F.vm=null;F.paused=false;F.boost=false;F.i++;
   const n=F.names?{n:F.names[F.i]}:NM[F.path[F.i]],st=F.steps[F.i];
   sc.innerHTML=`<div class="head"><div class="ic">🎢</div><div><h2>Riding to ${n?n.n:F.path[F.i]}…</h2><div class="tag">${st.proto[0]} · stop ${F.i+1} of ${F.path.length}</div></div></div><div class="nav"><button class="btn" id="folX">✕ Exit</button><button class="btn" id="folB">⏩ Faster</button></div>`;
   sheet.classList.remove('collapsed');document.getElementById('folX').onclick=endFollow;document.getElementById('folB').onclick=()=>{F.boost=!F.boost;document.getElementById('folB').classList.toggle('on',F.boost);};}
+function smoothSeg(c){try{const L=c.getLength();if(!(L>0.5))return c;const n=Math.max(8,Math.ceil(L/0.25));let pts=[];for(let i=0;i<=n;i++)pts.push(c.getPointAt(i/n));
+  for(let it=0;it<3;it++){const q=[pts[0]];for(let i=0;i<pts.length-1;i++){const A=pts[i],B=pts[i+1];q.push(A.clone().lerp(B,.25),A.clone().lerp(B,.75));}q.push(pts[pts.length-1]);pts=q;}
+  const cr=new THREE.CatmullRomCurve3(pts,false,'centripetal');cr.arcLengthDivisions=Math.max(200,pts.length*2);return cr;}catch(e){return c;}}
 function folArrive(){const F=FOL;F.paused=true;F.at=F.seg.getPointAt(1);const tg=F.seg.getTangentAt(1);F.seg=null;tg.y=0;if(tg.lengthSq()>1e-4)F.hdir.copy(tg.normalize());pulseAt(F.at.clone(),0xfde047);folShow();}
 let _UP,_M4,_Q;
-function folUpdate(dt){const W=WK,F=FOL;if(!F)return;if(!_UP){_UP=new THREE.Vector3(0,1,0);_M4=new THREE.Matrix4();_Q=new THREE.Quaternion();}const port=innerWidth<innerHeight;
-  if(F.seg&&!F.paused){F.t=Math.min(1,F.t+dt*F.speed*(F.boost?2.5:1)/F.len);}
+function folUpdate(dt){const W=WK,F=FOL;if(!F)return;{const nr=F.seg?0.45:0.2;if(Math.abs(W.camera.near-nr)>.01){W.camera.near=nr;W.camera.updateProjectionMatrix();}}if(!_UP){_UP=new THREE.Vector3(0,1,0);_M4=new THREE.Matrix4();_Q=new THREE.Quaternion();}const port=innerWidth<innerHeight;
+  if(F.seg&&!F.paused){F.st=(F.st||0)+dt;const Ln=F.len,d=F.t*Ln,rem=Ln-d;
+    const ta=F.seg.getTangentAt(F.t),tb=F.seg.getTangentAt(Math.min(1,F.t+1.6/Ln)),turn=Math.acos(Math.max(-1,Math.min(1,ta.dot(tb))));
+    const ease=v=>v*v*(3-2*v),cl=v=>Math.max(0,Math.min(1,v));
+    let m=0.3+0.7*ease(cl(d/2.2));                  // ease out of the start
+    m*=1-0.55*cl(turn/1.2);                          // slow into bends
+    m*=0.2+0.8*ease(cl(rem/4.5));                    // glide in to the destination
+    F.vm=F.vm==null?m:F.vm+(m-F.vm)*(1-Math.exp(-dt*6));
+    F.t=Math.min(1,F.t+dt*F.speed*1.3*(F.boost?2.5:1)*F.vm/Ln);}
   const p=F.seg?F.seg.getPointAt(F.t):F.at.clone();F.pk.position.copy(p);
-  F.hist.unshift(p.clone());if(F.hist.length>30)F.hist.pop();F.trail.forEach((s,i)=>s.position.copy(F.hist[Math.min(F.hist.length-1,(i+1)*3)]));
+  F.hist.unshift(p.clone());if(F.hist.length>30)F.hist.pop();
+  if(!F.ch)F.ch=[p.clone()];if(F.ch[0].distanceToSquared(p)>.0025){F.ch.unshift(p.clone());if(F.ch.length>400)F.ch.pop();}F.trail.forEach((s,i)=>s.position.copy(F.hist[Math.min(F.hist.length-1,(i+1)*3)]));
   let camT,lookT;
   F.pk.children[0].visible=!F.seg;F.pk.scale.setScalar(F.seg?.55:1);F.trail.forEach(t=>t.visible=!F.seg);
-  if(F.seg){const Ln=F.len,tb=F.t-2.3/Ln,ta=F.t+3.4/Ln;
-    const back=tb>=0?F.seg.getPointAt(tb):F.seg.getPointAt(0).addScaledVector(F.seg.getTangentAt(0),tb*Ln);
-    const ahead=ta<=1?F.seg.getPointAt(ta):F.seg.getPointAt(1).addScaledVector(F.seg.getTangentAt(1),(ta-1)*Ln);
-    const tg=F.seg.getTangentAt(F.t);const h=new THREE.Vector3(tg.x,0,tg.z);if(h.lengthSq()>.04)F.hdir.lerp(h.normalize(),.2).normalize();
-    camT=back.add(new THREE.Vector3(0,.5,0));lookT=ahead.add(new THREE.Vector3(0,.15,0));
-    W.camera.position.lerp(camT,1-Math.exp(-dt*10));}
+  if(F.seg){const Ln=F.len;
+    const behind=(dist)=>{let acc=0;for(let i=1;i<F.ch.length;i++){const sg=F.ch[i-1].distanceTo(F.ch[i]);if(acc+sg>=dist)return F.ch[i-1].clone().lerp(F.ch[i],(dist-acc)/sg);acc+=sg;}return F.ch[F.ch.length-1].clone();};
+    const ahead=(dist)=>{const ta=F.t+dist/Ln;return ta<=1?F.seg.getPointAt(ta):F.seg.getPointAt(1).addScaledVector(F.seg.getTangentAt(1),(ta-1)*Ln*.35);};
+    const tg=F.seg.getTangentAt(F.t);const h=new THREE.Vector3(tg.x,0,tg.z);if(h.lengthSq()>.04)F.hdir.lerp(h.normalize(),.12).normalize();
+    camT=behind(2.2).add(new THREE.Vector3(0,.35,0));
+    lookT=ahead(1.4).multiplyScalar(.4).add(ahead(3.2).multiplyScalar(.35)).add(ahead(6).multiplyScalar(.25)).add(new THREE.Vector3(0,.1,0));
+    const k=Math.min(1,(F.st||0)/0.9),rate=2.5+9*k*k;   // gentle swoop in, then stay tight on the path
+    W.camera.position.lerp(camT,1-Math.exp(-dt*rate));}
   else{camT=p.clone().addScaledVector(F.hdir,-3.0).add(new THREE.Vector3(0,1.2,0));lookT=p.clone();
     const sheetUp=!sheet.classList.contains('collapsed')&&sc.querySelector('.body');if(sheetUp)lookT.y-=port?1.5:.5;
     W.camera.position.lerp(camT,1-Math.exp(-dt*3));}
-  const dir=lookT.clone().sub(W.camera.position);const up=Math.abs(dir.clone().normalize().y)>.96?F.hdir:_UP;
-  _M4.lookAt(W.camera.position,lookT,up);_Q.setFromRotationMatrix(_M4);W.camera.quaternion.slerp(_Q,1-Math.exp(-dt*(F.seg?7:4)));
+  {const dir=lookT.clone().sub(W.camera.position),hz=Math.hypot(dir.x,dir.z),need=Math.abs(dir.y)/2.2;if(hz<need)lookT.addScaledVector(F.hdir,need-hz);}   // never look straight up/down: no roll flips in risers
+  const kr=F.seg?Math.min(1,(F.st||0)/1.1):1;
+  _M4.lookAt(W.camera.position,lookT,_UP);_Q.setFromRotationMatrix(_M4);{const ang=W.camera.quaternion.angleTo(_Q),want=ang*(1-Math.exp(-dt*(F.seg?1.4+2.8*kr*kr:3))),cap=dt*(F.seg?(F.boost?3.2:1.9):2.4);W.camera.quaternion.rotateTowards(_Q,Math.min(want,cap));}
   if(F.seg&&F.t>=1)folArrive();
   const v=p.clone();v.y+=.6;v.project(W.camera);if(v.z>1||F.seg){F.lbl.style.visibility='hidden';}else{F.lbl.style.visibility='';F.lbl.style.transform=`translate(${(v.x+1)/2*innerWidth}px,${(1-v.y)/2*innerHeight}px) translate(-50%,-100%)`;}}
-function endFollow(){const F=FOL;if(!F)return;const W=WK;W.scene.remove(F.pk);F.trail.forEach(s=>W.scene.remove(s));F.lbl.remove();folPill.style.display='none';FOL=null;
+function endFollow(){const F=FOL;if(!F)return;const W=WK;W.camera.near=0.05;W.camera.updateProjectionMatrix();W.scene.remove(F.pk);F.trail.forEach(s=>W.scene.remove(s));F.lbl.remove();folPill.style.display='none';FOL=null;
   clearHL();SIM.paused=false;W.camera.rotation.order='YXZ';setWalkMode(F.prev.mode==='over'?'over':'walk');
   if(F.prev.mode!=='over'){W.floor=F.prev.fl;W.pos.set(F.prev.x,1.7,F.prev.z);W.yaw=F.prev.yaw;W.pitch=F.prev.pitch;}else if(F.prev.cam){W.ov=null;W.camera.position.copy(F.prev.cam);if(F.prev.oyaw!==undefined){W.oyaw=F.prev.oyaw;W.opitch=F.prev.opitch;}W.camera.rotation.set(W.opitch,W.oyaw,0,'YXZ');}
   sheet.classList.add('collapsed');if(F.hmiWas)openHMI();if(F.lapWas)openLaptop();}
