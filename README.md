@@ -34,7 +34,7 @@ simulation; it's a hands-on, gamified way to learn the basics.
 - ⚡ **Power the neighborhood:** start up the plant, sync to the grid and watch the town's lights come on
 - 💥 **Break it:** turn off the safety protections, push the plant past its limits, and watch the turbine,
   generator and transformer go up in flames (then learn which protection would have stopped it)
-- ⏱️ **Work a shift:** follow grid demand, spot faults early on the PI trends, and keep the plant online
+- ⏱️ **Work a shift:** answer the grid operator's dispatch orders, spot faults early on the PI trends, and keep the plant online
 - 🎯 **Red vs blue:** replay a real-world-style attack against your own firewall rules, then hunt it in the logs
 - 🚨 **Incident drill:** an attacker is stopping your cooling fans. Contain it before the turbine trips
 - 🕵️ **Easter eggs:** hidden around the plant. Some of them go boom.
