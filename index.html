@@ -125,7 +125,7 @@ svg.zones .zone{display:inline}
 #hud .hb2{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}#hud .btn{padding:6px 10px;font-size:12.5px}
 #hmi{position:fixed;left:0;right:0;bottom:0;height:min(78vh,700px);z-index:9;background:#d6d7d9;color:#1f2937;display:none;flex-direction:column;border-top:3px solid #4b5563;box-shadow:0 -10px 40px rgba(0,0,0,.5);max-width:720px;margin:0 auto;border-radius:14px 14px 0 0;overflow:hidden}
 #hmi.show{display:flex}
-#cip{position:fixed;inset:0;z-index:14;display:none;background:#05080f}#cip.show{display:block}.cipm{overflow:auto;max-width:900px}.cipm h2{margin:4px 0 8px}.cipm p{color:#cbd5e1;line-height:1.5}.xqsv.on{background:#13213a;color:#fff}
+#cip,#fcc{position:fixed;inset:0;z-index:14;display:none;background:#05080f}#cip.show,#fcc.show{display:block}#fcc .cipm{max-width:900px;overflow:auto}#fcc .cipm h2{margin:4px 0 8px}#fcc .cipm p{color:#cbd5e1;line-height:1.5}.fccn{display:inline-block;min-width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;background:#0e7490;color:#fff;font-weight:700;font-size:12px;margin-right:6px}.fccmap{font-size:12px;color:#94a3b8;margin:6px 0 2px}.fccmap b{color:#e2e8f0}.cipm{overflow:auto;max-width:900px}.cipm h2{margin:4px 0 8px}.cipm p{color:#cbd5e1;line-height:1.5}.xqsv.on{background:#13213a;color:#fff}
 #soc{position:fixed;inset:0;z-index:14;display:none;background:#05080f}#soc.show{display:block}.xq{display:flex;flex-direction:column;height:100%;font-size:13px;color:#e2e8f0}
 .xqh{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #1e293b;background:#0b1220}.xqh b{font-size:15px}.xqsub{color:#64748b;font-size:12px}.xqh .hx{margin-left:auto;background:#334155;border:0;color:#fff;border-radius:8px;padding:4px 10px;cursor:pointer}
 .xqb{flex:1;display:flex;min-height:0}.xqs{width:290px;flex:none;overflow:auto;padding:8px 12px;border-right:1px solid #1e293b;background:#070b14}.xqs h4{margin:12px 0 6px;color:#64748b;font-size:11px;text-transform:uppercase;letter-spacing:.8px}
@@ -350,6 +350,7 @@ body.locked #xhair{display:block}body.locked #lblw .l3{pointer-events:none}
     <button class="btn" id="glossBtn">📖 Glossary</button>
     <button class="btn" id="socBtn">🔍 SOC queries</button>
     <button class="btn" id="cipBtn">📜 NERC CIP</button>
+    <button class="btn" id="fccBtn">🛡️ 5 Critical Controls</button>
     <button class="btn" id="zoneBtn">🧱 Zones</button>
     <button class="btn" id="scenBtn">🎯 Attack scenarios</button>
     <button class="btn" id="quizBtn">★ Quiz</button>
@@ -365,7 +366,7 @@ body.locked #xhair{display:block}body.locked #lblw .l3{pointer-events:none}
 <div id="xhair"></div><div id="xtip"></div><div id="lockHint">🖱 <b>Click empty space to look around</b> · drag also works · WASD move · Shift run · Space jump · Click/E open · E again to close · 1–0 rooms · O overview · M HMI · L laptop · K log · F firewalls · R reach · I identities · T Kerberos · P security desk · V sound · N night · Esc frees the cursor</div>
 <div id="folPill"></div><div id="floorPill"></div><div id="fade"></div>
 <div id="hud"></div>
-<button id="fireBtn" aria-label="Fire">🚀</button><button id="jumpBtn" aria-label="Jump">⤒</button><div id="soc"></div><div id="cip"></div><div id="secPanel"></div><div id="fwPanel"></div><div id="idPanel"></div><div id="opsPanel"></div><div id="shiftHud"></div><div id="spinPill"></div><div id="protCard"></div><div id="fxFlash"></div><div id="hmi"></div><div id="laptop"></div>
+<button id="fireBtn" aria-label="Fire">🚀</button><button id="jumpBtn" aria-label="Jump">⤒</button><div id="soc"></div><div id="cip"></div><div id="fcc"></div><div id="secPanel"></div><div id="fwPanel"></div><div id="idPanel"></div><div id="opsPanel"></div><div id="shiftHud"></div><div id="spinPill"></div><div id="protCard"></div><div id="fxFlash"></div><div id="hmi"></div><div id="laptop"></div>
 <div class="ov" id="hub"><div class="scrim"></div><div class="panel"><div class="ptop"><b>🎮 Missions</b><button class="btn" data-close>✕</button></div><p style="color:var(--muted);font-size:13px;padding:0 6px;line-height:1.45">Run the plant as an operator, design its security as an architect, and trace how sessions really flow. Everything plays out inside the walkable plant.</p><div id="hubList"></div></div></div>
 
 <div id="sheet"><button class="grab" id="grab" aria-label="Expand or collapse"><i></i></button><div id="sc"></div></div>
@@ -1968,6 +1969,64 @@ function renderCip(){const el=document.getElementById('cip');const all=CIP.flatM
   el.querySelector('#cipX').onclick=closeCip;el.querySelectorAll('[data-cip]').forEach(b=>b.onclick=()=>{CIPV.sel=b.dataset.cip;renderCip();});
   el.querySelectorAll('[data-cg]').forEach(b=>b.onclick=()=>c.lab[+b.dataset.cg].go[1]());el.querySelectorAll('[data-cs]').forEach(b=>b.onclick=()=>{const i=c.lab[+b.dataset.cs];cipShow(i.show,'CIP-'+c.n+': '+i.t.replace(/<[^>]+>/g,'').slice(0,60));});}
 
+
+/* =================== SANS ICS FIVE CRITICAL CONTROLS =================== */
+const FCCV={sel:1};
+const fd=(f)=>()=>{closeFcc();f();};
+const FCC=[
+ {n:1,t:'ICS Incident Response',ic:'🚨',
+  p:'Have an incident response plan written for the plant, not just for IT: scenarios where the process is affected, operations and engineering in the room, and a way to get back to a known-good state. Then practice it.',
+  why:'In an OT incident the first question isn’t “which laptop is infected?” It’s “is the process safe, and can we trust what the HMI is showing us?” A plan that only IT has rehearsed falls apart there.',
+  cip:'CIP-008 (incident reporting & response) · CIP-009 (recovery plans)',
+  lab:[{t:'OT incident drill completed (cooling fans being stopped by an attacker)',st:ok(()=>IR.st>=IRS.length),gap:'Run the incident drill end to end',go:['🚨 Incident drill',fd(cipDo.ops('ir'))]},
+   {t:'Known-good controller logic (golden copies) ready for restoration',st:ok(()=>OPS.chg.done),gap:'Finish a change through change management so a golden copy exists',go:['🔁 Change management',fd(cipDo.ops('chg'))],show:['backup','plc']},
+   {t:'Rehearse it as red vs blue: replay an attack, then hunt it in the logs',st:'info',go:['🎯 Red vs blue',fd(cipDo.ops('rb'))]}]},
+ {n:2,t:'Defensible Architecture',ic:'🧱',
+  p:'Design the network so defenders can see and control what crosses it: zones, a DMZ between IT and OT, as few paths in as possible, and nothing from the business side reaching controllers.',
+  why:'Architecture doesn’t stop a determined attacker on its own. It buys time and forces them through the few chokepoints you’re watching. That makes the other four controls work.',
+  cip:'CIP-005 (electronic security perimeters)',
+  lab:[{t:'Business network can’t reach controllers (PLC, DCS, SIS, relays)',st:ok(()=>!['plc','dcs','sis','relay'].some(h=>(LISTEN[h]||[]).some(s=>fwOK('corpws',h,s)))),gap:'A corporate PC can reach a controller',go:['🎯 Reach: phished PC',fd(cipDo.reach('corpws'))],show:['corpfw','itfw','otfw']},
+   {t:'Control-network firewall limits east-west paths inside OT',st:ok(()=>NET.ctlOn),gap:'Nothing separates devices inside the control network',go:['🧱 Install control firewall',fd(cipDo.fw('ctlfw'))]},
+   {t:'Unneeded remote-admin services blocked from user networks',st:ok(()=>!fwOK('corpws','ews','rdp')&&!fwOK('corpws','hmi','rdp')),gap:'Corporate PCs can RDP into OT workstations',go:['🧱 DMZ FW · OT side',fd(cipDo.fw('otfw'))]}]},
+ {n:3,t:'ICS Network Visibility & Monitoring',ic:'🔍',
+  p:'Watch the control network itself with tools that understand industrial protocols: who talks to whom, which commands are sent, and what’s new. Know what assets you have so you can spot what doesn’t belong.',
+  why:'Most ICS attacks were found late, or by accident. An OT IDS that knows “only SCADA-01 writes to that PLC” turns a quiet attack into an alert.',
+  cip:'CIP-007 (security event monitoring) · CIP-015 (internal network security monitoring) · CIP-002 (asset identification)',
+  lab:[{t:'Asset inventory reconciled: unknown devices found and resolved',st:ok(()=>Object.keys(OPS.inv.added).length+Object.keys(OPS.inv.removed).length>=3),gap:'Unknown devices are still on the network',go:['📋 Inventory',fd(cipDo.ops('inv'))],show:['ids','scada']},
+   {t:'No unauthorized hardware on the control network',st:ok(()=>OPS.inv.removed.modem&&OPS.inv.removed.lap7&&!GAG.found.pi),gap:'A rogue modem or laptop is still connected',go:['📋 Inventory',fd(cipDo.ops('inv'))]},
+   {t:'Hunt: Modbus writes that didn’t come from SCADA',st:'info',go:['🔍 Run the hunt',fd(cipDo.soc(XSAVED[3][1]))]},
+   {t:'Hunt: new talkers on the control network',st:'info',go:['🔍 Run the hunt',fd(cipDo.soc(XSAVED[4][1]))]}]},
+ {n:4,t:'Secure Remote Access',ic:'🔐',
+  p:'Every remote session into OT goes through one controlled path: multi-factor authentication, an intermediate jump host, approval for the work, and recording. Vendor access is off until it’s needed.',
+  why:'Remote access is how many real ICS intrusions started, including the 2015 Ukraine grid attack. Making it one well-watched door removes a lot of risk.',
+  cip:'CIP-005 R2 (interactive remote access) · CIP-003 (vendor remote access at low-impact sites)',
+  lab:[{t:'Remote access lands on the jump host, never directly in OT',st:ok(()=>fwOK('vpnuser','jump','rdp')&&!fwOK('vpnuser','ews','rdp')&&!fwOK('vpnuser','hmi','rdp')),gap:'A VPN user can reach OT without the jump host',go:['🎯 Reach: stolen VPN login',fd(cipDo.reach('vpnuser'))],show:['jump']},
+   {t:'No interactive remote path to operator HMIs',st:ok(()=>!fwOK('jump','hmi','rdp')),gap:'The jump host can RDP to an HMI',go:['🧱 DMZ FW · OT side',fd(cipDo.fw('otfw'))],show:['hmi']},
+   {t:'Vendor remote access removed until needed (just-in-time)',st:ok(()=>IDS_.fixed.vendor),gap:'A standing vendor account is still enabled',go:['👥 Fix vendor account',fd(cipDo.id('acct'))]},
+   {t:'MFA at the VPN and again at the jump host, with a work order and recording',st:'info',go:['💻 Try the remote laptop',fd(cipDo.lap())]}]},
+ {n:5,t:'Risk-based Vulnerability Management',ic:'🩹',
+  p:'You can’t patch everything in OT, and you don’t need to. Know which vulnerabilities an attacker could actually reach and use against your process, fix those first, and mitigate the rest with architecture and monitoring.',
+  why:'A “critical” score on a device no attacker can reach matters less than a medium one on the jump host. Sorting fixes into <b>Now</b> (reachable and exploitable), <b>Next</b> (fix at the next outage) and <b>Never</b> (other controls cover it) keeps the plant running and the risk down.',
+  cip:'CIP-007 R2 (patch management) · CIP-010 R3 (vulnerability assessments)',
+  lab:[{t:'Vulnerability assessment performed from the attacker’s point of view',st:ok(()=>OPS.scan&&OPS.scan.done),gap:'No assessment has been run yet',go:['🔎 IT assessment',fd(cipDo.ops('assess'))]},
+   {t:'Patches evaluated, tested and deployed through a process',st:ok(()=>OPS.patch.step>=PSTEPS.length),gap:'Patch Tuesday hasn’t been worked through',go:['🩹 Patch Tuesday',fd(cipDo.ops('patch'))],show:['patch']},
+   {t:'Exposure decides priority: what can each compromised device actually reach?',st:'info',go:['🎯 Reach: phished PC',fd(cipDo.reach('corpws'))]}]}
+];
+function openFcc(){document.getElementById('fcc').classList.add('show');if(WK&&isLocked&&isLocked())document.exitPointerLock();renderFcc();}
+function closeFcc(){document.getElementById('fcc').classList.remove('show');}
+function renderFcc(){const el=document.getElementById('fcc');const all=FCC.flatMap(c=>c.lab.filter(i=>i.st!=='info')),met=all.filter(i=>cipSt(i)==='ok').length,pct=Math.round(met/all.length*100);
+  const c=FCC.find(x=>x.n===FCCV.sel);
+  el.innerHTML=`<div class="xq"><div class="xqh"><b>🛡️ SANS ICS Five Critical Controls</b><span class="xqsub">Five controls drawn from the known ICS attacks · where Story Electric has them</span><button class="hx" id="fccX">✕</button></div>
+  <div class="xqb"><aside class="xqs"><div class="idsc" style="--s:${pct}"><b>${pct}%</b><span>Lab coverage · ${met}/${all.length} checks met</span></div>
+   <p class="hint" style="margin:8px 0">Written by Robert M. Lee and Tim Conway for the SANS Institute after analyzing every publicly known ICS cyber attack. It’s a short, prioritized starting point for any OT security program, regulated or not.</p>
+   ${FCC.map(x=>{const items=x.lab.filter(i=>i.st!=='info'),m=items.filter(i=>cipSt(i)==='ok').length;const dot=m===items.length?'✅':m?'🟡':'🔴';return `<button class="xqsv ${x.n===FCCV.sel?'on':''}" data-fcc="${x.n}">${dot} <span class="fccn">${x.n}</span>${x.t}</button>`;}).join('')}
+   <p class="hint" style="margin-top:10px">Status is live: fix things in the lab and watch the checks turn green. Summaries are in our own words; read the SANS white paper for the real thing.</p></aside>
+  <main class="xqm cipm"><h2>${c.ic} Control ${c.n} · ${c.t}</h2><p>${c.p}</p><div class="box blue"><b>Why it matters</b>${c.why}</div><div class="fccmap">📜 Related NERC CIP: <b>${c.cip}</b></div>
+   <h3>In the Story Electric lab</h3>${c.lab.map((i,k)=>{const s=cipSt(i);return `<div class="afd ${s==='ok'?'ok':s==='gap'?'crit':''}"><b>${s==='ok'?'✅':s==='gap'?'⚠️':'▶️'} ${i.t}</b>${s==='gap'&&i.gap?`<div style="color:#fca5a5">Gap: ${i.gap}</div>`:''}<div style="margin-top:5px">${i.go?`<button class="btn chip" data-fg="${k}">${i.go[0]}</button> `:''}${i.show?`<button class="btn chip" data-fs="${k}">📍 Show in the plant</button>`:''}</div></div>`;}).join('')}
+   <div style="margin-top:14px;display:flex;gap:8px">${c.n>1?`<button class="btn" data-fn="${c.n-1}">← Control ${c.n-1}</button>`:''}${c.n<5?`<button class="btn" data-fn="${c.n+1}">Control ${c.n+1} →</button>`:''}</div>
+  </main></div></div>`;
+  el.querySelector('#fccX').onclick=closeFcc;el.querySelectorAll('[data-fcc],[data-fn]').forEach(b=>b.onclick=()=>{FCCV.sel=+(b.dataset.fcc||b.dataset.fn);renderFcc();});
+  el.querySelectorAll('[data-fg]').forEach(b=>b.onclick=()=>c.lab[+b.dataset.fg].go[1]());el.querySelectorAll('[data-fs]').forEach(b=>b.onclick=()=>{const i=c.lab[+b.dataset.fs];closeFcc();cipShow(i.show,'Control '+c.n+': '+i.t.replace(/<[^>]+>/g,'').slice(0,60));});}
 /* =================== SOUND: procedural plant audio (Web Audio, no files) =================== */
 const SND={on:true,ctx:null,m:null,L:{},vol:.55,stepT:0,lastAl:0,air:false};
 function sndInit(){if(SND.ctx)return true;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;
@@ -3837,6 +3896,8 @@ const GL=[
  ['OT','Operational Technology','sec','Hardware and software that monitor and control physical processes such as PLCs, SCADA and SIS. Its priorities are safety and availability first, unlike IT.'],
  ['IT','Information Technology','sec','Business computing such as email, ERP and office PCs. Its priority is usually protecting data (confidentiality).','corpws'],
  ['ICS / IACS','Industrial Control System / Industrial Automation & Control System','sec','The umbrella term for SCADA, DCS, PLCs, SIS and everything that controls industrial processes. IACS is the term IEC 62443 uses.'],
+ ['5 Critical Controls','SANS ICS Five Critical Controls','sec','A short, prioritized OT security framework by Robert M. Lee and Tim Conway (SANS), built from analysis of the known ICS attacks: ICS incident response, defensible architecture, ICS network visibility and monitoring, secure remote access, and risk-based vulnerability management. See the 🛡️ 5 Critical Controls tab.'],
+ ['Now / Next / Never','Risk-based patch prioritization','sec','A way to sort OT vulnerabilities: fix <b>Now</b> if an attacker can reach and exploit it, <b>Next</b> at a planned outage, or <b>Never</b> when other controls (segmentation, monitoring) already cover the risk.'],
  ['Purdue model','Purdue Enterprise Reference Architecture','sec','A layered reference model for industrial networks. Level 0 is the physical process, 1 the controllers, 2 supervisory control, 3 site operations, 3.5 the DMZ, and 4–5 enterprise IT. It’s used to decide where to segment. It’s a reference model, not a literal network diagram: real plants blur levels (cloud, wireless, IIoT), and IEC 62443 zones and conduits are the modern way to design segmentation.'],
  ['DMZ','Demilitarized Zone (Level 3.5)','sec','A buffer network between IT and OT. Nothing passes straight through; IT and OT each talk only to servers in the DMZ, such as a historian replica or jump host.','dmzhist'],
  ['Zones & conduits','IEC 62443 segmentation','sec','Zones group assets with similar security needs. Conduits are the controlled communication paths between them, such as firewalls or diodes, each with an explicit list of what is allowed.'],
@@ -3904,7 +3965,7 @@ function openGloss(){const c=document.getElementById('gCats');
   c.querySelectorAll('[data-gc]').forEach(b=>b.onclick=()=>{gCat=b.dataset.gc;openGloss();});
   const s=document.getElementById('gSearch');s.value=gQ;s.oninput=()=>{gQ=s.value;renderGloss();};
   renderGloss();ov('gloss',true);}
-document.getElementById('glossBtn').onclick=openGloss;document.getElementById('socBtn').onclick=openSoc;document.getElementById('cipBtn').onclick=openCip;
+document.getElementById('glossBtn').onclick=openGloss;document.getElementById('socBtn').onclick=openSoc;document.getElementById('cipBtn').onclick=openCip;document.getElementById('fccBtn').onclick=openFcc;
 function glossMatch(q){q=q.toLowerCase().trim();if(!q)return[];return GL.filter(g=>(g[0]+' '+g[1]+' '+g[3]).toLowerCase().includes(q)).map(g=>{const A=g[0].toLowerCase(),N=g[1].toLowerCase();
   const r=A===q||A.split(/[ \/·]+/).includes(q)?0:A.startsWith(q)?1:N.startsWith(q)?2:(A.includes(q)||N.includes(q))?3:4;return[r,g];}).sort((x,y)=>x[0]-y[0]||x[1][0].localeCompare(y[1][0])).map(x=>x[1]);}
 (()=>{const inp=document.getElementById('qs'),dd=document.getElementById('qsDrop');let sel=0,res=[];
