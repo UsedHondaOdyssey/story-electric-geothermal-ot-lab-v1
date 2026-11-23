@@ -50,6 +50,7 @@ simulation; it's a hands-on, gamified way to learn the basics.
 - 🗂️ **Run OT security operations:** asset inventory, vulnerability triage, patching, change management,
   and USB media control
 - 📜 **See NERC CIP mapped to the lab,** with a live score of which controls the lab meets
+- 🛡️ **Walk through the SANS ICS Five Critical Controls** and see where each one lives in the plant
 
 Built with [Claude](https://claude.ai). Feel free to fork it, modify it to your heart's content, or reach out with ideas!
 
