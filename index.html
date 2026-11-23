@@ -125,6 +125,7 @@ svg.zones .zone{display:inline}
 #hud .hb2{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}#hud .btn{padding:6px 10px;font-size:12.5px}
 #hmi{position:fixed;left:0;right:0;bottom:0;height:min(78vh,700px);z-index:9;background:#d6d7d9;color:#1f2937;display:none;flex-direction:column;border-top:3px solid #4b5563;box-shadow:0 -10px 40px rgba(0,0,0,.5);max-width:720px;margin:0 auto;border-radius:14px 14px 0 0;overflow:hidden}
 #hmi.show{display:flex}
+#pxPanel{position:fixed;right:10px;top:118px;bottom:10px;width:min(430px,calc(100vw - 20px));z-index:10;background:rgba(8,12,22,.97);border:1px solid #ef4444;border-radius:14px;display:none;flex-direction:column;font-size:12.5px;box-shadow:0 10px 40px rgba(0,0,0,.5)}#pxPanel.show{display:flex}#pxPanel .fwh{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid #1e293b}#pxPanel .fwh .hint{font-size:11px}#pxPanel .hx{margin-left:auto;background:#334155;border:0;color:#fff;border-radius:8px;padding:3px 9px;cursor:pointer}#pxPanel .idb{flex:1;overflow:auto;padding:8px 12px}#pxPanel p{color:#cbd5e1;line-height:1.45}#pxPanel .item{width:100%;text-align:left}#pxPanel .item[disabled]{opacity:.5}#pxPanel .rsum{padding:8px 10px;border-radius:8px;margin:8px 0}#pxPanel .rsum.bad{background:#3b0d0d;color:#fecaca}#pxPanel .rsum.good{background:#052e1a;color:#bbf7d0}.pxat{padding:6px 8px;background:#0f172a;border-radius:8px;margin:4px 0 8px}.pxnz{position:relative;height:18px;background:#1e293b;border-radius:9px;overflow:hidden;margin-bottom:8px}.pxnz div{height:100%;transition:width .4s}.pxnz span{position:absolute;inset:0;text-align:center;font-size:11px;line-height:18px;color:#fff;font-weight:700}.pxn{font-size:10.5px;color:#fca5a5;background:#3b0d0d;border-radius:6px;padding:0 5px;margin-left:4px}
 #cip,#fcc{position:fixed;inset:0;z-index:14;display:none;background:#05080f}#cip.show,#fcc.show{display:block}#fcc .cipm{max-width:900px;overflow:auto}#fcc .cipm h2{margin:4px 0 8px}#fcc .cipm p{color:#cbd5e1;line-height:1.5}.fccn{display:inline-block;min-width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;background:#0e7490;color:#fff;font-weight:700;font-size:12px;margin-right:6px}.fccmap{font-size:12px;color:#94a3b8;margin:6px 0 2px}.fccmap b{color:#e2e8f0}.cipm{overflow:auto;max-width:900px}.cipm h2{margin:4px 0 8px}.cipm p{color:#cbd5e1;line-height:1.5}.xqsv.on{background:#13213a;color:#fff}
 #soc{position:fixed;inset:0;z-index:14;display:none;background:#05080f}#soc.show{display:block}.xq{display:flex;flex-direction:column;height:100%;font-size:13px;color:#e2e8f0}
 .xqh{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #1e293b;background:#0b1220}.xqh b{font-size:15px}.xqsub{color:#64748b;font-size:12px}.xqh .hx{margin-left:auto;background:#334155;border:0;color:#fff;border-radius:8px;padding:4px 10px;cursor:pointer}
@@ -351,6 +352,8 @@ body.locked #xhair{display:block}body.locked #lblw .l3{pointer-events:none}
     <button class="btn" id="socBtn">🔍 SOC queries</button>
     <button class="btn" id="cipBtn">📜 NERC CIP</button>
     <button class="btn" id="fccBtn">🛡️ 5 Critical Controls</button>
+    <button class="btn" id="pxBtn">🕹️ Pentest mode</button>
+    <button class="btn" id="stxBtn">🦠 Stuxnet remix</button>
     <button class="btn" id="zoneBtn">🧱 Zones</button>
     <button class="btn" id="scenBtn">🎯 Attack scenarios</button>
     <button class="btn" id="quizBtn">★ Quiz</button>
@@ -2027,6 +2030,145 @@ function renderFcc(){const el=document.getElementById('fcc');const all=FCC.flatM
   </main></div></div>`;
   el.querySelector('#fccX').onclick=closeFcc;el.querySelectorAll('[data-fcc],[data-fn]').forEach(b=>b.onclick=()=>{FCCV.sel=+(b.dataset.fcc||b.dataset.fn);renderFcc();});
   el.querySelectorAll('[data-fg]').forEach(b=>b.onclick=()=>c.lab[+b.dataset.fg].go[1]());el.querySelectorAll('[data-fs]').forEach(b=>b.onclick=()=>{const i=c.lab[+b.dataset.fs];closeFcc();cipShow(i.show,'Control '+c.n+': '+i.t.replace(/<[^>]+>/g,'').slice(0,60));});}
+
+/* =================== PENTEST MODE: attack-path game (simulated, fictional plant) =================== */
+const PX={on:false};
+const pxEl=document.createElement('div');pxEl.id='pxPanel';document.body.appendChild(pxEl);
+const PXS={
+ phish:{ic:'🎣',t:'Phished business PC',at:'corpws',creds:[],hops:['internet','corpfw','corpws'],d:'An accounts-payable clerk opened a fake invoice. You have code running on their business PC on the IT network.'},
+ vpn:{ic:'🔑',t:'Leaked engineer password',at:'internet',creds:['user'],d:'An engineer reused their work password on a site that got breached. You have the username and password, and you’re on the internet.'},
+ vendor:{ic:'🧰',t:'Old turbine-vendor login',at:'internet',creds:['vendor'],d:'A turbine-vendor support login was posted on a criminal forum. It’s from years ago. Is it still active?'},
+ modem:{ic:'📡',t:'Forgotten cellular modem',at:'internet',creds:[],d:'An internet search engine for devices shows a cellular modem on a Story Electric phone plan. A contractor installed it years ago “for remote support”.',avail:()=>!OPS.inv.removed.modem,off:'Removed during your asset inventory ✓ (Control 3 did its job)'},
+ usb:{ic:'🔌',t:'Infected USB stick',at:'usb',creds:[],d:'You’ve planted malware on a USB stick a contractor will bring on site to update a controller.'}
+};
+const PXN={internet:'🌐 The internet',corpws:'💻 Business PC (IT)',jump:'🔐 Jump host (DMZ)',ews:'🛠️ Engineering workstation (OT)',plc:'⚙️ Cooling & pump PLC',usb:'🔌 USB stick in a contractor’s bag'};
+const pxReach=h=>HOSTS.filter(x=>x!==h&&x!=='vendor').map(x=>[x,(LISTEN[x]||[]).filter(s=>fwOK(h==='usb'?'internet':h,x,s))]).filter(r=>r[1].length);
+function pxMoves(){const P=PX,at=P.at,c=P.creds,M=[];
+ const add=(id,t,n,d)=>M.push({id,t,n,d});
+ if(at!=='usb')add('recon','🔎 Look around: what can I reach from here?',5,'Quiet discovery from where you are.');
+ if(at==='corpws'){add('creds','🔑 Grab passwords saved on this PC',20,'Credential theft on a workstation. Noisy if endpoint detection is watching.');
+  add('rdpews','🖥️ RDP straight to the engineering workstation',15,'Skip the DMZ and go directly into OT.');
+  add('plcdirect','🏭 Send Modbus straight to the cooling PLC',10,'Talk to a controller from the business network.');
+  add('replica','📈 Go back into OT through the historian replica',10,'The replica in the DMZ is fed from OT. Can you ride that connection backwards?');
+  if(c.has('itadmin'))add('itadmin','👑 Use the IT domain-admin account on OT systems',15,'You stole an IT admin’s login. Does it work in OT?');}
+ if((at==='corpws'||at==='internet')&&c.has('user')){add('vpnlogin','🔐 Log into the VPN with the stolen password',15,'Password is right. Then comes MFA.');add('mfaspam','📣 Spam MFA pushes until someone taps “approve”',30,'“MFA fatigue”: flood the phone with prompts.');}
+ if(at==='internet'&&c.has('vendor'))add('vendorlogin','🧰 Log in with the old vendor account',15,'Vendor accounts often skip MFA as a “legacy exception”.');
+ if(at==='internet'&&P.start==='modem')add('modem','📡 Connect through the forgotten modem',10,'It’s wired straight into the cooling PLC’s network.');
+ if(at==='usb')add('usbin','⏳ Wait for the contractor to plug in at the engineering workstation',5,'Malware runs when the stick is opened on the EWS.');
+ if(at==='jump'){add('jumpews','🖥️ RDP to the engineering workstation',10,'Allowed for engineers and vendors on a work order.');add('jumphmi','🖥️ RDP to an operator HMI',10,'Take over the operator’s screen directly.');}
+ if(at==='ews'||at==='plc'){add('coil','✍️ Write a coil: stop the cooling fans',35,'A Modbus write the PLC will obey. The process reacts immediately.');
+  if(at==='ews'){add('logic','📥 Download modified logic to the cooling PLC',30,'Change what the PLC does, Stuxnet-style. Quieter on the HMI, louder on the wire.');add('sis','⚠️ Reprogram the safety system (SIS)',25,'Disable the last line of defense, TRITON-style.');}}
+ return M;}
+const FIXGO={fw:t=>()=>{closePx();openFw(t);},id:()=>()=>{closePx();openId('acct');},ops:t=>()=>{closePx();openOps(t);}};
+function pxRun(id){const P=PX;if(P.done)return;const m=pxMoves().find(x=>x.id===id);if(!m)return;let r;const c=P.creds;
+ switch(id){
+  case'recon':{const R=pxReach(P.at);r={ok:true,msg:R.length?'Reachable from here: '+R.map(([h,s])=>`<b>${(NM[h]||{n:h}).n}</b> (${s.join('/')})`).join(', '):'Nothing useful is reachable from here.',ctl:2};break;}
+  case'creds':c.add('user');if(!IDS_.fixed.tier)c.add('itadmin');r={ok:true,msg:'You found the clerk’s password'+(c.has('itadmin')?', and an <b>IT domain-admin</b> password cached from when IT fixed this PC (admins logging into workstations with their admin accounts).':'. No admin credentials: IT admins use separate privileged accounts, so nothing valuable was cached.'),alert:'EDR: credential access tool on CORP-PC-114',ctl:4,fix:c.has('itadmin')?['👥 Fix admin tiering',FIXGO.id()]:null};break;
+  case'rdpews':r=fwOK('corpws','ews','rdp')?{ok:true,to:'ews',hops:['corpws','corpfw','itfw','dmzhist','otfw','ews'],msg:'The firewalls let a business PC RDP straight into OT. You’re on the engineering workstation.',alert:'OT firewall: RDP from IT subnet to EWS-01',ctl:2,fix:['🧱 Close the rule',FIXGO.fw('otfw')]}:{ok:false,msg:'Blocked. The DMZ firewalls don’t allow RDP from the business network into OT.',alert:'OT firewall DENY: RDP 10.10.4.114 → EWS-01',ctl:2};break;
+  case'plcdirect':r=fwOK('corpws','plc','modbus')?{ok:true,win:true,hops:['corpws','corpfw','itfw','dmzhist','otfw','ews','plc'],msg:'Modbus from the business network reaches the PLC.',ctl:2,fix:['🧱 Close the rule',FIXGO.fw('otfw')]}:{ok:false,msg:'Blocked. Nothing on the business network can reach a controller.',alert:'OT firewall DENY: Modbus 502 from IT subnet',ctl:2};break;
+  case'replica':r={ok:false,msg:'Dead end. Replication is started from the OT side and flows out to the replica; the firewall (or a data diode) doesn’t accept connections back in.',alert:'DMZ firewall DENY: replica → OT historian',ctl:2};break;
+  case'itadmin':r={ok:false,msg:'Useless in OT. The OT domain is a separate forest with no trust to IT, so IT credentials don’t exist there.',alert:'OT DC: 4625 failed logon for unknown account CORP\\it-admin',ctl:2};break;
+  case'vpnlogin':r={ok:false,msg:'The password works, then MFA asks the engineer to type a number shown on your screen. They can’t see your screen, so they deny it.',alert:'MFA: push denied for jsmith (number mismatch)',ctl:4};break;
+  case'mfaspam':r={ok:false,msg:'Number matching defeats MFA fatigue: tapping “approve” isn’t enough without the number. Twelve denied prompts later, the SOC calls the engineer.',alert:'MFA fatigue: 12 pushes to jsmith in 4 minutes',ctl:4};break;
+  case'vendorlogin':r=IDS_.fixed.vendor?{ok:false,msg:'Account disabled. Vendor access is just-in-time: enabled for a work order, then switched off.',alert:'VPN: logon attempt for disabled account vendor-turbine',ctl:4}:{ok:true,to:'jump',hops:['vendor','corpfw','itfw','jump'],msg:'It still works, and it’s exempt from MFA. You’re on the jump host.',alert:'VPN: vendor-turbine logon 02:14 · no work order',ctl:4,fix:['👥 Disable the vendor account',FIXGO.id()]};break;
+  case'modem':r=OPS.inv.removed.modem?{ok:false,msg:'The modem is gone. It was found and removed during the asset inventory.',ctl:3}:{ok:true,to:'plc',pts:true,msg:'Default password on the modem, and it’s bridged straight onto the control network. You’re next to the cooling PLC, and no firewall is in the way.',alert:'OT IDS: new talker 10.30.9.77 on the control network',ctl:3,fix:['📋 Find it in the inventory',FIXGO.ops('inv')]};break;
+  case'usbin':{const kiosk=USB.st==='kiosk'&&Object.keys(USB.pick).length===USBF.length&&USBF.every((f,i)=>USB.pick[i]===f.ok);
+   r=kiosk?{ok:false,msg:'The USB kiosk scanned the stick and blocked the file. Vendor media never enters OT; files are copied to clean company media.',alert:'USB kiosk: malware blocked on contractor media',ctl:5}:{ok:true,to:'ews',msg:'The contractor plugs in at the engineering workstation and opens the update folder. Your code is running on the EWS.',alert:'EWS-01: removable media mounted',ctl:2,fix:['🔌 Set up the USB kiosk',FIXGO.ops('usb')]};break;}
+  case'jumpews':r=fwOK('jump','ews','rdp')?{ok:true,to:'ews',hops:['jump','otfw','ews'],msg:'The jump host is allowed to reach the EWS (that’s its job). The session is recorded, but no one is watching at 2 a.m.',alert:'Jump host: session to EWS-01 with no work order',ctl:4}:{ok:false,msg:'Blocked by the OT-side firewall.',ctl:2};break;
+  case'jumphmi':r=fwOK('jump','hmi','rdp')?{ok:true,to:'ews',hops:['jump','otfw','ews','hmi'],msg:'You can drive the operator’s screen.',ctl:4,fix:['🧱 Close it',FIXGO.fw('otfw')]}:{ok:false,msg:'Blocked. Remote sessions can’t reach operator HMIs at all.',alert:'OT firewall DENY: RDP jump → HMI-01',ctl:4};break;
+  case'coil':{const from=P.at==='plc'?'internet':'ews';const ok=P.at==='plc'||fwOK('ews','plc','modbus');
+   r=ok?{ok:true,win:true,hops:P.at==='plc'?['plc','cooling']:['ews','plc','cooling'],msg:'The PLC obeys: Modbus has no authentication. Two cooling fans spin down and condenser vacuum starts to drop.',alert:'OT IDS: Modbus WRITE to Cooling PLC from '+(P.at==='plc'?'10.30.9.77':'EWS-01')+' (not SCADA)',ctl:3}:{ok:false,msg:'The control-network firewall blocks Modbus from the EWS.',ctl:2};break;}
+  case'logic':r=fwOK('ews','plc','eng')?{ok:true,win:true,hops:['ews','plc','cooling'],msg:'New logic is running on the cooling PLC. The HMI still looks normal; only the golden-copy compare and the IDS will notice.',alert:'OT IDS: program download to Cooling PLC outside a change window',ctl:3}:{ok:false,msg:'Blocked by the control-network firewall.',ctl:2};break;
+  case'sis':r={ok:false,msg:'The safety controller’s key switch is in RUN, so it rejects new programs. (TRITON in 2017 worked because the key was left in PROGRAM.) The attempt shows up as an SIS alarm.',alert:'SIS: program write rejected (key switch in RUN)',ctl:2};break;}
+ P.noise+=m.n;if(r.alert){P.noise+=r.ok?0:5;secAdd({who:'attacker (pentest mode)',act:r.alert,from:PXN[P.at]||P.at,to:'—',auth:'none',how:'Pentest mode · simulated',res:r.ok?'warn':'deny',dom:'ot'},1);}
+ P.log.push({t:m.t,ok:r.ok,msg:r.msg,ctl:r.ctl,fix:r.fix,alert:r.alert,n:m.n});
+ if(WK){try{if(r.hops)animPath(r.hops,r.ok?0xef4444:0x64748b,null,m.t.replace(/^\S+\s/,''));else if(r.pts)animPath(null,0xef4444,[wpos('internet'),wpos('plc')]);const tgt=r.to||P.at;if(wpos(tgt))pulseAt(wpos(tgt).clone(),r.ok?0xef4444:0x94a3b8);}catch(e){}}
+ if(r.to){P.at=r.to;P.path.push(r.to);if(WK)idRings(P.path.filter(x=>wpos(x)),0xef4444);}
+ if(r.win){P.done='win';P.path.push('plc');try{SIM.fans[1]=0;SIM.fans[2]=0;alarm('Fans 2 & 3 stopped (pentest mode: attacker reached the PLC)','hi');}catch(e){}}
+ else if(P.noise>=100){P.done='caught';}
+ renderPx();}
+function pxStart(k){const S=PXS[k];if(S.avail&&!S.avail())return;Object.assign(PX,{start:k,at:S.at,creds:new Set(S.creds),noise:0,log:[],done:false,path:[S.at]});
+ if(WK){try{if(S.hops)animPath(S.hops,0xef4444,null,'initial access');idRings([S.at].filter(x=>wpos(x)),0xef4444);}catch(e){}}renderPx();}
+async function openPx(){closeAll&&closeAll();PX.on=true;if(!isWalk)await setView('walk');try{overview(new THREE.Vector3(14,4,8),62);sheet.classList.add('collapsed');}catch(e){}if(WK&&isLocked())document.exitPointerLock();pxEl.classList.add('show');renderPx();}
+function closePx(){pxEl.classList.remove('show');PX.on=false;try{idRings([]);}catch(e){}}
+function renderPx(){const P=PX;let h=`<div class="fwh"><b>🕹️ Pentest mode</b><span class="hint">Simulated attack on the fictional plant · no real tools or commands</span><button class="hx" id="pxX">✕</button></div><div class="idb">`;
+ if(!P.start){h+=`<p>Pick a starting foothold, then choose your moves. Every move makes <b>noise</b>; reach 100 and the SOC contains you. Your goal: <b>stop the cooling fans</b>. What works depends on how the lab is configured right now, so fix things and replay.</p>`+
+   Object.entries(PXS).map(([k,s])=>{const av=!s.avail||s.avail();return `<button class="item pxs" data-pxs="${k}" ${av?'':'disabled'}><span style="font-size:20px">${s.ic}</span><div><b>${s.t}</b>${PROG['px_'+k]?' 🏅':''}<small>${av?s.d:s.off}</small></div></button>`;}).join('');}
+ else{const S=PXS[P.start],pct=Math.min(100,P.noise);
+  h+=`<div class="pxat">${S.ic} <b>${S.t}</b> → you are on <b>${PXN[P.at]||P.at}</b>${P.creds.size?` · 🔑 ${[...P.creds].join(', ')}`:''}</div>
+   <div class="pxnz"><div style="width:${pct}%;background:${pct<50?'#22c55e':pct<80?'#f59e0b':'#ef4444'}"></div><span>Noise ${P.noise}/100</span></div>`;
+  if(!P.done)h+=pxMoves().map(m=>`<button class="item pxm" data-pxm="${m.id}"><div><b>${m.t}</b> <span class="pxn">+${m.n}</span><small>${m.d}</small></div></button>`).join('');
+  else{const win=P.done==='win';const stars=win?(P.noise<50?3:P.noise<80?2:1):0;if(win&&stars>(PROG['px_'+P.start]||0)){PROG['px_'+P.start]=stars;saveProg();}
+   h+=`<div class="rsum ${win?'bad':'good'}">${win?`🏴 <b>Objective reached</b> with ${P.noise} noise ${'⭐'.repeat(stars)}. In a real plant the operators now have a cooling emergency.`:'🛡️ <b>Caught.</b> Your noise crossed 100 and the SOC isolated you. The defenses worked.'}</div>
+    <h4>What would stop this path</h4>${P.log.filter(l=>l.ok&&l.fix).map((l,i)=>`<div class="afd crit"><b>⚠️ ${l.t.replace(/^\S+\s/,'')}</b><div>${l.msg}</div><button class="btn chip" data-pxf="${P.log.indexOf(l)}">${l.fix[0]}</button></div>`).join('')||'<p class="hint">Nothing to fix: every step you got through was an allowed path. Detection (Control 3) is what caught you.</p>'}`;}
+  h+=`<h4>Your moves</h4>${P.log.slice().reverse().map(l=>`<div class="afd ${l.ok?'crit':'ok'}"><b>${l.ok?'✔️':'⛔'} ${l.t.replace(/^\S+\s/,'')}</b> <span class="pxn">+${l.n}</span><div>${l.msg}</div>${l.alert?`<div class="hint">🚨 Defender sees: ${l.alert}</div>`:''}${l.ctl?`<div class="hint">🛡️ Critical Control ${l.ctl}: ${FCC[l.ctl-1].t}</div>`:''}</div>`).join('')||'<p class="hint">No moves yet.</p>'}
+   <div style="display:flex;gap:8px;margin-top:8px"><button class="btn" id="pxR">↩ New foothold</button><button class="btn" id="pxSoc">🔍 See it in the SOC</button></div>`;}
+ h+='</div>';pxEl.innerHTML=h;
+ pxEl.querySelector('#pxX').onclick=closePx;pxEl.querySelectorAll('[data-pxs]').forEach(b=>b.onclick=()=>pxStart(b.dataset.pxs));pxEl.querySelectorAll('[data-pxm]').forEach(b=>b.onclick=()=>pxRun(b.dataset.pxm));
+ pxEl.querySelectorAll('[data-pxf]').forEach(b=>b.onclick=()=>P.log[+b.dataset.pxf].fix[1]());
+ const rr=pxEl.querySelector('#pxR');if(rr)rr.onclick=()=>{P.start=null;try{idRings([]);}catch(e){}renderPx();};const so=pxEl.querySelector('#pxSoc');if(so)so.onclick=()=>{closePx();openSec();};}
+
+/* =================== STUXNET REMIX: a Stuxnet-style attack on Story Electric =================== */
+const STXQ=[
+ {t:'📞 The grid operator calls',q:'“Story Electric, our revenue meter shows you at <b>19.6 MW</b>. You’re scheduled for 22.” Your HMI says <b>22.0 MW</b>, every value green. First move?',
+  o:[['meter','Tell them their meter must be wrong; your HMI is fine',0,'The grid operator’s meter is independent of your control system. When two sources disagree, assume yours could be the one lying.'],
+     ['field','Send an operator to read the local gauges at the cooling tower and generator panel',2,'Right. Out-of-band verification: physical gauges and field checks don’t go through the PLC or SCADA, so malware can’t fake them.'],
+     ['reboot','Reboot the HMI to clear any glitch',0,'A reboot shows the same values: the HMI is faithfully displaying what the control system tells it.']]},
+ {t:'📻 The operator radios back',q:'“Fans 1–4 are surging: racing, then nearly stopping, every few minutes. Vibration gauge on Fan 3 is in the red. Condenser vacuum gauge reads 0.12 bar.” The HMI still shows smooth fans and 0.085 bar. What does that tell you?',
+  o:[['bug','An HMI display bug',0,'A display bug wouldn’t also hide alarms and change the PI trends. Everything fed by the control system agrees on the fake story.'],
+     ['sensor','A failed vibration sensor',0,'One bad sensor wouldn’t explain the vacuum, the MW gap and the surging you can hear.'],
+     ['cyber','The control system itself may be compromised: treat it as a cyber incident',2,'Yes. This is Stuxnet’s signature: the process is being manipulated while operators’ screens replay “normal”.']]},
+ {t:'🛑 Make it safe',q:'Fan 3 could fail mechanically. What do you do right now?',
+  o:[['hand','Switch the cooling fans to HAND at the motor control center, so the PLC can’t drive them',2,'Right. Local/hand control bypasses the compromised logic. Knowing how to run the plant without the control system is part of OT incident response.'],
+     ['trip','Trip the whole plant immediately',1,'Safe, but expensive: a full trip drops 22 MW off the grid. Taking manual control of just the affected equipment was enough.'],
+     ['wait','Keep running and investigate during the day shift',0,'The equipment is being driven toward damage now. Safety first, forensics second.']]},
+ {t:'🔍 Find the cause',q:'Fans are steady on HAND. Where do you look?',
+  o:[['golden','Compare the cooling PLC’s running logic against the golden copy',2,'Right. The compare shows a new block that cycles fan speed and a second one that feeds recorded values back to SCADA.'],
+     ['reimage','Reimage the HMI',0,'The HMI was never the problem. Reimaging it destroys nothing but evidence.'],
+     ['av','Run antivirus on the PLC',0,'PLCs don’t run antivirus. You find logic changes by comparing against a known-good baseline.']]},
+ {t:'🧯 Recover and learn',q:'The SOC finds a USB mount on the engineering workstation three weeks ago, then a logic download last night. Best recovery?',
+  o:[['all','Isolate the EWS, restore golden-copy logic through change management, scan all removable media at a kiosk, and hunt for other changed controllers',2,'That’s the full loop: contain, restore from known-good, close the entry point, and check you got everything.'],
+     ['restore','Restore the golden copy and go back to AUTO',1,'Good start, but the EWS is still infected, so it can push the bad logic again.'],
+     ['newplc','Replace the PLC hardware',0,'The hardware is fine. The infected engineering workstation would just reprogram the new one.']]}
+];
+function stxCard(h){open(h);}
+async function startStx(){closeAll&&closeAll();if(!isWalk)await setView('walk');STX.on=true;STX.score=0;STX.q=0;STX.spoof=false;STX.attack=false;STX.snap=null;
+ const kiosk=USB.st==='kiosk'&&Object.keys(USB.pick).length===USBF.length&&USBF.every((f,i)=>USB.pick[i]===f.ok);
+ stxCard(`<div class="head"><div class="ic">🦠</div><div><h2>Stuxnet remix</h2><div class="tag">A Stuxnet-style attack on Story Electric</div></div></div><div class="body">
+  <p><b>The real story, in brief:</b> Stuxnet was discovered in 2010. It crossed an air gap on USB drives, spread until it found the engineering software for one specific setup, then quietly changed PLC logic so centrifuges at Iran’s Natanz enrichment plant spun too fast and too slow. While it did, the operators’ screens showed recorded “normal” values.</p>
+  <p><b>Your version:</b> the same playbook against your cooling fans. You’re the night-shift operator. Watch it unfold, then catch it and recover.</p>
+  ${kiosk?'<div class="box green"><b>🛡️ Your USB kiosk would stop this at step one.</b> Vendor media never touches the EWS, so the infection never starts. Play anyway, assuming someone bypassed the kiosk?</div>':''}
+  <div class="nav"><button class="btn" id="stxGo">▶ Start</button></div></div>`);
+ sc.querySelector('#stxGo').onclick=stxRun;}
+function stxNarr(ic,t,p,nx){stxCard(`<div class="head"><div class="ic">${ic}</div><div><h2>${t}</h2><div class="tag">Stuxnet remix</div></div></div><div class="body"><p>${p}</p><div class="nav"><button class="btn" id="stxN">Next ›</button></div></div>`);sc.querySelector('#stxN').onclick=nx;}
+function stxRun(){simReset('run22');try{overview(new THREE.Vector3(26,3,14),78);}catch(e){}
+ const at=id=>{try{pulseAt(wpos(id).clone(),0xef4444);idRings([id],0xef4444);}catch(e){}};
+ at('ews');secAdd({who:'contractor (vendor)',act:'Removable media mounted on EWS-01',from:'USB',to:'EWS-01',auth:'none',how:'Stuxnet remix',res:'warn',dom:'ot'},1);
+ stxNarr('🔌','Day 1 · A USB stick','A contractor plugs a USB stick into the <b>engineering workstation</b> to load a firmware update. Hidden on it is malware that runs as soon as the folder is opened. Nothing visible happens.',()=>{
+  try{animPath(['ews','plc'],0xef4444,null,'logic download');}catch(e){}at('plc');secAdd({who:'EWS-01',act:'Program download to Cooling PLC (outside change window)',from:'EWS-01',to:'Cooling & pump PLC',auth:'none',how:'Stuxnet remix · OT IDS alert',res:'warn',dom:'ot'},1);
+  stxNarr('🧬','Day 21 · The logic changes','The malware waited three weeks for an engineer to open the cooling PLC project. Last night it slipped two new blocks into the PLC: one <b>cycles the fan drives</b> between racing and crawling, and one <b>records normal values for 30 seconds and replays them</b> to SCADA. The OT IDS logged the download, but nobody was watching it.',()=>{
+   STX.snap=JSON.parse(JSON.stringify(SIM));STX.spoof=true;STX.attack=true;try{idRings(['plc','cooling'],0xef4444);}catch(e){}
+   stxNarr('🎭','Tonight · Everything looks normal','The attack is live. <b>Open the HMI</b> (M): every value is green. Then <b>walk to the cooling tower</b> or listen: the fans are surging. The HMI, alarms and PI trends are all showing the recording.',()=>stxQ());});});}
+function stxQ(){const Q=STXQ[STX.q];if(!Q)return stxEnd();
+ stxCard(`<div class="head"><div class="ic">❓</div><div><h2>${Q.t}</h2><div class="tag">Decision ${STX.q+1} of ${STXQ.length}</div></div></div><div class="body"><p>${Q.q}</p><div class="rpick">${Q.o.map(o=>`<button class="btn chip" data-sx="${o[0]}" style="display:block;width:100%;text-align:left;margin:4px 0">${o[1]}</button>`).join('')}</div></div>`);
+ sc.querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{const o=Q.o.find(x=>x[0]===b.dataset.sx);STX.score+=o[2];
+  if(STX.q===2&&o[0]!=='wait'){STX.attack=false;}if(STX.q===2&&o[0]==='trip'){try{doCmd('turb:trip');}catch(e){}}
+  stxCard(`<div class="head"><div class="ic">${o[2]===2?'✅':o[2]===1?'🟡':'❌'}</div><div><h2>${o[2]===2?'Good call':o[2]===1?'Partly right':'Not quite'}</h2><div class="tag">${Q.t}</div></div></div><div class="body"><p>${o[3]}</p>${STX.q===3?`<div class="box"><b>Golden copy vs running logic</b><pre style="white-space:pre-wrap;font-size:11.5px;margin:6px 0">  FAN_SPEED_CMD := FAN_SETPOINT;            (golden)
++ IF CYCLE_TIMER &gt; 900 THEN FAN_SPEED_CMD := 140 %;  (added)
++ IF CYCLE_TIMER &gt; 1020 THEN FAN_SPEED_CMD := 5 %;   (added)
++ SCADA_REPORT := RECORDED_VALUES;                    (added)</pre><span class="hint">Simplified pseudo-logic for illustration.</span></div>`:''}<div class="nav"><button class="btn" id="stxN">Next ›</button></div></div>`);
+  sc.querySelector('#stxN').onclick=()=>{STX.q++;stxQ();};});}
+function stxEnd(){STX.spoof=false;STX.attack=false;STX.snap=null;STX.on=false;try{SIM.fanVib=SIM.fanVib.map(()=>2);}catch(e){}try{idRings([]);}catch(e){}const max=STXQ.length*2,pct=Math.round(STX.score/max*100),stars=pct>=90?3:pct>=60?2:pct>=30?1:0;
+ if(stars>(PROG.stx||0)){PROG.stx=stars;saveProg();}
+ stxCard(`<div class="head"><div class="ic">🏁</div><div><h2>Plant recovered ${stars?'⭐'.repeat(stars):''}</h2><div class="tag">Stuxnet remix · ${STX.score}/${max}</div></div></div><div class="body">
+  <p>The HMI is showing live values again. What this attack teaches:</p>
+  <div class="afd"><b>🔌 Removable media is a way in</b><div>The air gap didn’t matter; a USB stick crossed it. → USB kiosk, vendor media policy (CIP-003 / CIP-010 transient devices).</div></div>
+  <div class="afd"><b>🎭 Screens can lie</b><div>Everything fed by the control system agreed on the fake story. → Independent checks: field gauges, the grid operator’s meter, protection relays that don’t depend on the PLC.</div></div>
+  <div class="afd"><b>📏 Know what “good” looks like</b><div>Only a golden-copy compare proved the logic changed. → Baselines and change management (CIP-010), Critical Control 1 (incident response).</div></div>
+  <div class="afd"><b>🔍 Someone has to watch the wire</b><div>The OT IDS logged the logic download weeks before the damage. → Critical Control 3 (visibility & monitoring).</div></div>
+  <div class="nav"><button class="btn" id="stxU">🔌 Set up the USB kiosk</button><button class="btn" id="stxF">🛡️ 5 Critical Controls</button></div></div>`);
+ sc.querySelector('#stxU').onclick=()=>openOps('usb');sc.querySelector('#stxF').onclick=()=>{FCCV.sel=1;openFcc();};}
+
 /* =================== SOUND: procedural plant audio (Web Audio, no files) =================== */
 const SND={on:true,ctx:null,m:null,L:{},vol:.55,stepT:0,lastAl:0,air:false};
 function sndInit(){if(SND.ctx)return true;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;
@@ -2348,7 +2490,7 @@ function spinBlades(n,rIn,rOut,thick,width,twist,mat){const g=new THREE.Group();
 function animProc(dt){if(!PANIM.length)return;const S=SIM,lt=launchT();
   const cap=LAUNCH0===null||lt>21.5?1e9:3600*ease01((lt-1.5)/20);
   const rpmT=Math.min(S.speed,cap);VIS.rpm+=(rpmT-VIS.rpm)*Math.min(1,dt*2);VIS.ta+=VIS.rpm/3600*15*dt;
-  for(let i=0;i<5;i++){const tg=S.fans[i]&&!S.fanTrip[i]&&lt>2+i*1.4?1:0;VIS.fan[i]+=(tg-VIS.fan[i])*Math.min(1,dt*.7);}
+  for(let i=0;i<5;i++){const tg=(S.fans[i]&&!S.fanTrip[i]&&lt>2+i*1.4?1:0)*(STX.attack&&i<4?(Math.sin(performance.now()/2200+i*.7)>0?1.7:.15):1);VIS.fan[i]+=(tg-VIS.fan[i])*Math.min(1,dt*.7);}
   VIS.inj+=((((S.inj[0]||S.inj[1])&&lt>1)?1:0)-VIS.inj)*Math.min(1,dt*.8);
   VIS.ncg+=(((S.ncg&&lt>2.5)?1:0)-VIS.ncg)*Math.min(1,dt*.8);
   VIS.injf=VIS.injf||[0,0];for(let i=0;i<2;i++)VIS.injf[i]+=(((S.inj[i]&&lt>1+i*.8)?1:0)-VIS.injf[i])*Math.min(1,dt*.8);
@@ -3113,7 +3255,7 @@ SND.on=PROG.snd!==0;
 function saveProg(){try{localStorage.setItem('geoLab.v1',JSON.stringify(PROG));}catch(e){}}
 const hud=document.getElementById('hud'),hmiEl=document.getElementById('hmi');
 /* ---------- process simulation ---------- */
-const SIM={};
+const SIM={};var STX={on:false,spoof:false,attack:false,snap:null,score:0,q:0};
 function simReset(kind){
   Object.assign(SIM,{fans:[0,0,0,0,0],fanTrip:[0,0,0,0,0],condPump:0,ncg:0,inj:[0,0],well:0,lvlMode:'MAN',turb:'TRIPPED',brk:0,loadSP:0,
     sepP:0,sepL:30,wellFlow:0,steamAvail:0,steamT:0,speed:0,mw:0,condP:1.0,alarms:[],t:0,msg:null,hold:0,tripWhy:'',dmg:{},ovs:0,
@@ -3124,11 +3266,11 @@ function simReset(kind){
 }
 simReset('run22');
 let alarmId=0;
-function alarm(txt,sev){if(SIM.alarms.some(a=>a.txt===txt&&!a.ack))return;if((sev||'hi')==='hi'&&typeof sndAlarm==='function')sndAlarm();SIM.alarms.unshift({id:++alarmId,txt,sev:sev||'hi',t:SIM.t,ack:false});if(hmiOpen)hmiDirty=true;}
+function alarm(txt,sev){if(STX.spoof)return;if(SIM.alarms.some(a=>a.txt===txt&&!a.ack))return;if((sev||'hi')==='hi'&&typeof sndAlarm==='function')sndAlarm();SIM.alarms.unshift({id:++alarmId,txt,sev:sev||'hi',t:SIM.t,ack:false});if(hmiOpen)hmiDirty=true;}
 function trip(why,sis){if(SIM.turb==='TRIPPED')return;if(typeof sndClunk==='function'&&WK){sndClunk(new THREE.Vector3(31.5,2.5,7));}if(typeof protectEvent==='function')setTimeout(()=>protectEvent(sis?'sis':/back-pressure/.test(why)?'bp':/steam pressure/.test(why)?'lowsteam':''),300);SIM.turb='TRIPPED';SIM.brk=0;SIM.mw=0;SIM.tripWhy=why;alarm('TURBINE TRIP — '+why,'hi');if(sis){SIM.well=0;alarm('SIS ACTION — production valve closed','hi');}
   if(isWalk)animPath(sis?['sis','turbine']:['dcs','turbine'],'#f87171');}
 const fansOn=()=>SIM.fans.reduce((a,b)=>a+b,0);
-function simStep(dt){const S=SIM;S.t+=dt;
+function simStep(dt){const S=SIM;S.t+=dt;if(STX.attack){S.fanVib=S.fanVib.map((v,i)=>i<4?Math.min(10.5,v+dt*.25):v);}
   S.wf2+=((S.well2*.4)-S.wf2)*Math.min(1,dt*.5);S.wellFlow+=((S.well*1.2*(S.wDecl||1)+S.wf2)-S.wellFlow)*Math.min(1,dt*.6);
   const tgtP=S.wellFlow>5?Math.min(7,2+S.wellFlow*.045):0;S.sepP+=(tgtP-S.sepP)*Math.min(1,dt*.35);
   const wf1=Math.max(0,S.wellFlow-S.wf2);S.steamAvail=(wf1*.25+S.wf2*.55)*Math.min(1,S.sepP/4);
@@ -3201,7 +3343,7 @@ const INFO={
  u2:['Unit 2 · standby gen-set','A 6 MW natural-gas engine that starts in about 10 minutes for peaks above what Unit 1 can make. It costs fuel and emits CO₂, so it runs only when dispatch requires it. (A game addition: geothermal sites rarely have one.)'],
  load:['Load setpoint','The MW target the turbine controller follows. Output is limited by available steam (open the well valve for more) and by condenser vacuum.'],
 };
-function hmiVals(){const S=SIM,v={};
+function hmiVals(){const S=(STX.spoof&&STX.snap)?STX.snap:SIM,v={};
   const st=(on,tr)=>tr?['TRIPPED','tr']:on?['RUNNING','on']:['STOPPED','off'];
   S.fans.forEach((f,i)=>v['fan'+i]=st(f,S.fanTrip[i]));v.cpump=st(S.condPump);v.ncg=st(S.ncg);v.inj0=st(S.inj[0]);v.inj1=st(S.inj[1]);
   v.well=[S.well.toFixed(0)+' %',''];v.wflow=[S.wellFlow.toFixed(0)+' kg/s',''];v.sepP=[S.sepP.toFixed(2)+' bar',S.sepP<2.5&&S.well>0?'warn':''];
@@ -3845,10 +3987,18 @@ function ptReport(final){if(final===undefined||final.target)final=false;if(PT.su
     return `<div class="ar ok"><b style="color:${SEV[f.sev].c}">${SEV[f.sev].n}</b> ${f.title}<small>Your call: ${SEV[l.sev].n}${off?' — '+off+' off':' ✓'} · Fix: ${f.fix}</small></div>`;}).join('')||'<p class="hint">None.</p>'}
   <h4>${final?'Missed':'Not found yet'} (${all.length-caught.size})</h4>${!final?(all.length-caught.size?`<p class="hint">Still hidden — use 🔦 Recon scan for hints by area. Submitting the final report reveals them.</p>`:'<div class="ar ok">Nothing left to find. 🏆</div>'):all.filter(f=>!caught.has(f.id)).map(f=>`<div class="ar no"><b style="color:${SEV[f.sev].c}">${SEV[f.sev].n}</b> ${f.title}<small>📍 ${f.area} · ${f.obs.replace(/<[^>]+>/g,'')}<br><b>Fix:</b> ${f.fix} · ${f.att}</small></div>`).join('')||'<div class="ar ok">Nothing missed — full coverage. 🏆</div>'}
   ${fp.length?`<h4>False positives (${fp.length})</h4>${fp.map(l=>`<div class="ar no">${PTYPE[l.type]} @ ${NM[l.node]?NM[l.node].n:l.node} (${SEV[l.sev].n})${l.note?' — "'+l.note+'"':''}</div>`).join('')}`:''}
-  <div class="nav" style="padding:12px 0 0;flex-wrap:wrap"><button class="btn" id="ptCopy">📋 Copy report for Claude review</button>${final?'':'<button class="btn" id="ptMore">Keep hunting</button><button class="btn on" id="ptFinal">✔ Submit final report</button>'}</div><div id="ptCopyBox"></div>`;
+  <div class="nav" style="padding:12px 0 0;flex-wrap:wrap"><button class="btn" id="ptCopy">📋 Copy report for Claude review</button>${final?'<button class="btn on" id="ptDl">📄 Download pentest report (.md)</button>':''}${final?'':'<button class="btn" id="ptMore">Keep hunting</button><button class="btn on" id="ptFinal">✔ Submit final report</button>'}</div><div id="ptCopyBox"></div>`;
   ov('quiz',true);document.getElementById('qc').onclick=()=>ov('quiz',false);
   const mb=document.getElementById('ptMore');if(mb)mb.onclick=()=>ov('quiz',false);const fb2=document.getElementById('ptFinal');if(fb2)fb2.onclick=()=>ptReport(true);
-  document.getElementById('ptCopy').onclick=()=>ptCopy({all,caught,fp,cov,acc,score,stars});}
+  document.getElementById('ptCopy').onclick=()=>ptCopy({all,caught,fp,cov,acc,score,stars});const dl=document.getElementById('ptDl');if(dl)dl.onclick=()=>ptDownload({all,caught,fp,cov,acc,score,stars});}
+const PT2CC={exposed:4,flat:2,fwrule:2,unauth:2,creds:4,mfa:4,usb:2,phys:2,sis:2,trust:2,dataflow:2,backup:1,update:5,dualhome:2,monitor:3};
+function ptDownload(R){const tx=h=>String(h||'').replace(/<[^>]+>/g,'').replace(/&amp;/g,'&');const d=new Date().toISOString().slice(0,10);
+ const sorted=R.all.filter(f=>R.caught.has(f.id)).sort((a,b)=>SEVORD.indexOf(b.sev)-SEVORD.indexOf(a.sev));const cnt={};sorted.forEach(f=>cnt[SEV[f.sev].n]=(cnt[SEV[f.sev].n]||0)+1);
+ let m=`# Penetration Test Report: Story Electric Geothermal Plant\n\n**Engagement:** ${PT.e.t} (${PT.e.lvl})  \n**Date:** ${d}  \n**Prepared in:** Story Electric OT/IT Security Lab (simulated, fictional environment)\n\n> Training exercise. Story Electric, its systems and these findings are fictional.\n\n## 1. Executive summary\n\nThe assessment identified **${sorted.length} findings**`+(Object.keys(cnt).length?` (${Object.entries(cnt).map(([k,v])=>v+' '+k).join(', ')})`:'')+`. Assessor score: **${R.score}/100** (coverage ${R.cov}%, severity accuracy ${R.acc}%${R.fp.length?`, ${R.fp.length} false positive(s)`:''}).\n\n## 2. Scope\n\n${tx(PT.e.brief)}\n\n## 3. Findings\n\n`;
+ sorted.forEach((f,i)=>{const l=R.caught.get(f.id),cc=FCC[(PT2CC[f.type]||2)-1];m+=`### 3.${i+1} ${tx(f.title)}\n\n| | |\n|---|---|\n| **Severity** | ${SEV[f.sev].n}${l.sev!==f.sev?` (assessor rated ${SEV[l.sev].n})`:''} |\n| **Location** | ${tx(f.area)} · ${NM[f.node]?NM[f.node].n:f.node} |\n| **Category** | ${PTYPE[f.type]||f.type} |\n| **MITRE ATT&CK for ICS** | ${tx(f.att)} |\n| **SANS ICS Critical Control** | ${cc.n}. ${cc.t} |\n\n**Observation.** ${tx(f.obs)}\n\n**Impact.** ${tx(f.impact)}\n\n**Recommendation.** ${tx(f.fix)}\n\n`;});
+ const miss=R.all.filter(f=>!R.caught.has(f.id));if(miss.length)m+=`## 4. Issues not identified during the assessment\n\n`+miss.map(f=>`- **${SEV[f.sev].n}** · ${tx(f.title)}: ${tx(f.fix)}`).join('\n')+'\n\n';
+ m+=`## ${miss.length?5:4}. Methodology\n\nOn-site walkdown of each Purdue level, device inspection, firewall and access review, and mapping of findings to MITRE ATT&CK for ICS and the SANS ICS Five Critical Controls.\n`;
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([m],{type:'text/markdown'}));a.download=`story-electric-pentest-report-${d}.md`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);toast('📄 Report downloaded');}
 function ptCopy(R){const e=PT.e;let t=`Please review my OT/IT penetration-test findings for the "${e.t}" engagement in my geothermal plant lab.\n\nScope: ${e.brief.replace(/<[^>]+>/g,'')}\n\nMy findings (${R.caught.size}/${R.all.length}, score ${R.score}, coverage ${R.cov}%, severity accuracy ${R.acc}%):\n`;
   R.all.filter(f=>R.caught.has(f.id)).forEach(f=>{const l=R.caught.get(f.id);t+=`- [${SEV[l.sev].n}] ${f.title} (assessed ${SEV[f.sev].n})${l.note?' — note: '+l.note:''}\n`;});
   if(R.fp.length){t+=`\nFlagged but unmatched (possible false positives):\n`;R.fp.forEach(l=>t+=`- [${SEV[l.sev].n}] ${PTYPE[l.type]} @ ${NM[l.node]?NM[l.node].n:l.node}${l.note?' — '+l.note:''}\n`);}
@@ -3965,7 +4115,7 @@ function openGloss(){const c=document.getElementById('gCats');
   c.querySelectorAll('[data-gc]').forEach(b=>b.onclick=()=>{gCat=b.dataset.gc;openGloss();});
   const s=document.getElementById('gSearch');s.value=gQ;s.oninput=()=>{gQ=s.value;renderGloss();};
   renderGloss();ov('gloss',true);}
-document.getElementById('glossBtn').onclick=openGloss;document.getElementById('socBtn').onclick=openSoc;document.getElementById('cipBtn').onclick=openCip;document.getElementById('fccBtn').onclick=openFcc;
+document.getElementById('glossBtn').onclick=openGloss;document.getElementById('socBtn').onclick=openSoc;document.getElementById('cipBtn').onclick=openCip;document.getElementById('fccBtn').onclick=openFcc;document.getElementById('pxBtn').onclick=openPx;document.getElementById('stxBtn').onclick=startStx;
 function glossMatch(q){q=q.toLowerCase().trim();if(!q)return[];return GL.filter(g=>(g[0]+' '+g[1]+' '+g[3]).toLowerCase().includes(q)).map(g=>{const A=g[0].toLowerCase(),N=g[1].toLowerCase();
   const r=A===q||A.split(/[ \/·]+/).includes(q)?0:A.startsWith(q)?1:N.startsWith(q)?2:(A.includes(q)||N.includes(q))?3:4;return[r,g];}).sort((x,y)=>x[0]-y[0]||x[1][0].localeCompare(y[1][0])).map(x=>x[1]);}
 (()=>{const inp=document.getElementById('qs'),dd=document.getElementById('qsDrop');let sel=0,res=[];
@@ -4308,7 +4458,7 @@ function doneBtns(){return `<div class="ctry"><button class="btn on" id="rwRide"
 function bindDone(){const a=lapEl.querySelector('#rwRide'),b=lapEl.querySelector('#rwAgain');if(a)a.onclick=rideAll;if(b)b.onclick=()=>{RW.app=null;RW.bind=null;RW.dest=null;sessSet('rem',null);RW.status='Not connected';renderLaptop();};}
 /* ---- live historian samples (feeds PI Vision on the replica) ---- */
 const HIST={n:0,rows:[]};
-setInterval(()=>{try{if(CERTEXP)return;}catch(e){}const S=SIM,lt=typeof launchT==='function'&&LAUNCH0!==null?launchT():99;
+setInterval(()=>{try{if(CERTEXP)return;}catch(e){}const S=(STX.spoof&&STX.snap)?STX.snap:SIM,lt=typeof launchT==='function'&&LAUNCH0!==null?launchT():99;
   HIST.rows.push({dem:SHIFT.on?SHIFT.dem:S.loadSP,out:S.mw+(S.u2mw||0),flow:S.wellFlow/20,amb:(S.amb||20)/2,vib:Math.max(...S.fanVib.map((v,i)=>S.fans[i]?v:0)),bearT:S.bearT/10,injP:(14+Math.max(S.injScale[0],S.injScale[1])*40)/5,lAB:Math.abs(S.ltDrift),condP100:S.condP*100,t:Date.now(),mw:lt<30?S.mw*ease01((lt-22)/5):S.mw,rpm:lt<30?VIS.rpm:S.speed,sepP:S.sepP,sepL:S.sepL,condP:S.condP,flow:S.wellFlow,fans:fansOn(),inj:S.inj[0]+S.inj[1],turb:S.turb});
   if(HIST.rows.length>180)HIST.rows.shift();},1000);
 let PIV_STALE=null;
