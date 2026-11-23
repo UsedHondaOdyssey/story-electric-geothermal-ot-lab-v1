@@ -37,6 +37,8 @@ simulation; it's a hands-on, gamified way to learn the basics.
 - ⏱️ **Work a shift:** answer the grid operator's dispatch orders, spot faults early on the PI trends, and keep the plant online
 - 🎯 **Red vs blue:** replay a real-world-style attack against your own firewall rules, then hunt it in the logs
 - 🚨 **Incident drill:** an attacker is stopping your cooling fans. Contain it before the turbine trips
+- 🕹️ **Pentest mode:** pick a foothold (phished PC, leaked password, old vendor login, forgotten modem, infected USB) and try to reach the cooling PLC before the SOC catches you
+- 🦠 **Stuxnet remix:** a Stuxnet-style attack on your plant. The HMI replays “normal” while the fans surge; catch it and recover with the golden copy
 - 🕵️ **Easter eggs:** hidden around the plant. Some of them go boom.
 
 ## 📚 Learn
