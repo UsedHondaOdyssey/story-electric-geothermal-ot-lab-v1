@@ -125,7 +125,7 @@ svg.zones .zone{display:inline}
 #hud .hb2{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}#hud .btn{padding:6px 10px;font-size:12.5px}
 #hmi{position:fixed;left:0;right:0;bottom:0;height:min(78vh,700px);z-index:9;background:#d6d7d9;color:#1f2937;display:none;flex-direction:column;border-top:3px solid #4b5563;box-shadow:0 -10px 40px rgba(0,0,0,.5);max-width:720px;margin:0 auto;border-radius:14px 14px 0 0;overflow:hidden}
 #hmi.show{display:flex}
-#pxPanel{position:fixed;right:10px;top:118px;bottom:10px;width:min(430px,calc(100vw - 20px));z-index:10;background:rgba(8,12,22,.97);border:1px solid #ef4444;border-radius:14px;display:none;flex-direction:column;font-size:12.5px;box-shadow:0 10px 40px rgba(0,0,0,.5)}#pxPanel.show{display:flex}#pxPanel .fwh{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid #1e293b}#pxPanel .fwh .hint{font-size:11px}#pxPanel .hx{margin-left:auto;background:#334155;border:0;color:#fff;border-radius:8px;padding:3px 9px;cursor:pointer}#pxPanel .idb{flex:1;overflow:auto;padding:8px 12px}#pxPanel p{color:#cbd5e1;line-height:1.45}#pxPanel .item{width:100%;text-align:left}#pxPanel .item[disabled]{opacity:.5}#pxPanel .rsum{padding:8px 10px;border-radius:8px;margin:8px 0}#pxPanel .rsum.bad{background:#3b0d0d;color:#fecaca}#pxPanel .rsum.good{background:#052e1a;color:#bbf7d0}.pxat{padding:6px 8px;background:#0f172a;border-radius:8px;margin:4px 0 8px}.pxnz{position:relative;height:18px;background:#1e293b;border-radius:9px;overflow:hidden;margin-bottom:8px}.pxnz div{height:100%;transition:width .4s}.pxnz span{position:absolute;inset:0;text-align:center;font-size:11px;line-height:18px;color:#fff;font-weight:700}.pxn{font-size:10.5px;color:#fca5a5;background:#3b0d0d;border-radius:6px;padding:0 5px;margin-left:4px}
+#pxPanel{position:fixed;right:10px;top:118px;bottom:10px;width:min(430px,calc(100vw - 20px));z-index:10;background:rgba(8,12,22,.97);border:1px solid #ef4444;border-radius:14px;display:none;flex-direction:column;font-size:12.5px;box-shadow:0 10px 40px rgba(0,0,0,.5)}#pxPanel.show{display:flex}#pxPanel .fwh{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid #1e293b}#pxPanel .fwh .hint{font-size:11px}#pxPanel .hx{margin-left:auto;background:#334155;border:0;color:#fff;border-radius:8px;padding:3px 9px;cursor:pointer}#pxPanel .idb{flex:1;overflow:auto;padding:8px 12px}#pxPanel p{color:#cbd5e1;line-height:1.45}#pxPanel .item{width:100%;text-align:left}#pxPanel .item[disabled]{opacity:.5}#pxPanel .rsum{padding:8px 10px;border-radius:8px;margin:8px 0}#pxPanel .rsum.bad{background:#3b0d0d;color:#fecaca}#pxPanel .rsum.good{background:#052e1a;color:#bbf7d0}.pxat{padding:6px 8px;background:#0f172a;border-radius:8px;margin:4px 0 8px}.pxnz{position:relative;height:18px;background:#1e293b;border-radius:9px;overflow:hidden;margin-bottom:8px}.pxnz div{height:100%;transition:width .4s}.pxnz span{position:absolute;inset:0;text-align:center;font-size:11px;line-height:18px;color:#fff;font-weight:700}.pxtt{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}.pxtt span{font-size:10.5px;background:#172554;color:#bfdbfe;border-radius:5px;padding:1px 6px}.pxraw{background:#020617;color:#86efac;font-size:10.5px;padding:6px 8px;border-radius:6px;white-space:pre-wrap;word-break:break-all;margin:4px 0}.pxn{font-size:10.5px;color:#fca5a5;background:#3b0d0d;border-radius:6px;padding:0 5px;margin-left:4px}
 #cip,#fcc{position:fixed;inset:0;z-index:14;display:none;background:#05080f}#cip.show,#fcc.show{display:block}#fcc .cipm{max-width:900px;overflow:auto}#fcc .cipm h2{margin:4px 0 8px}#fcc .cipm p{color:#cbd5e1;line-height:1.5}.fccn{display:inline-block;min-width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;background:#0e7490;color:#fff;font-weight:700;font-size:12px;margin-right:6px}.fccmap{font-size:12px;color:#94a3b8;margin:6px 0 2px}.fccmap b{color:#e2e8f0}.cipm{overflow:auto;max-width:900px}.cipm h2{margin:4px 0 8px}.cipm p{color:#cbd5e1;line-height:1.5}.xqsv.on{background:#13213a;color:#fff}
 #soc{position:fixed;inset:0;z-index:14;display:none;background:#05080f}#soc.show{display:block}.xq{display:flex;flex-direction:column;height:100%;font-size:13px;color:#e2e8f0}
 .xqh{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #1e293b;background:#0b1220}.xqh b{font-size:15px}.xqsub{color:#64748b;font-size:12px}.xqh .hx{margin-left:auto;background:#334155;border:0;color:#fff;border-radius:8px;padding:4px 10px;cursor:pointer}
@@ -1951,7 +1951,7 @@ const CIP=[
    {t:'Vendor remote access controlled and revocable',st:ok(()=>IDS_.fixed.vendor),gap:'vendor-acme always on',go:['👥 Identity map',cipDo.id('acct')]}]},
  {n:'014',t:'Physical Security (critical transmission stations)',ic:'🏗️',p:'Transmission owners identify critical substations, have a third party verify the list, assess threats and vulnerabilities, and implement a physical security plan.',
   why:'Written after the 2013 Metcalf substation attack.',
-  lab:[{t:'Applies to qualifying <b>transmission stations</b>, not to a small generator like Story Electric. The lab’s rocket-launcher easter egg shows why physical protection matters anyway.',st:'info',show:['xfmr','grid']}]},
+  lab:[{t:'Applies to qualifying <b>transmission stations</b>, not to a small generator like Story Electric. Physical protection still matters at every site: fences, cameras and locked cabinets stop people who never touch the network.',st:'info',show:['xfmr','grid']}]},
  {n:'015',t:'Internal Network Security Monitoring (INSM)',ic:'👁️',p:'Monitor traffic <b>inside</b> the perimeter (east-west), collect and retain the data, analyze it for anomalous activity, and protect the monitoring data itself.',
   why:'Firewalls watch the doors; INSM watches the hallways, where the night-shift attacker moved.',
   lab:[{t:'OT IDS sensor watching the control network (SPAN)',st:'ok',show:['ids','scada']},
@@ -2039,7 +2039,8 @@ const PXS={
  vpn:{ic:'🔑',t:'Leaked engineer password',at:'internet',creds:['user'],d:'An engineer reused their work password on a site that got breached. You have the username and password, and you’re on the internet.'},
  vendor:{ic:'🧰',t:'Old turbine-vendor login',at:'internet',creds:['vendor'],d:'A turbine-vendor support login was posted on a criminal forum. It’s from years ago. Is it still active?'},
  modem:{ic:'📡',t:'Forgotten cellular modem',at:'internet',creds:[],d:'An internet search engine for devices shows a cellular modem on a Story Electric phone plan. A contractor installed it years ago “for remote support”.',avail:()=>!OPS.inv.removed.modem,off:'Removed during your asset inventory ✓ (Control 3 did its job)'},
- usb:{ic:'🔌',t:'Infected USB stick',at:'usb',creds:[],d:'You’ve planted malware on a USB stick a contractor will bring on site to update a controller.'}
+ usb:{ic:'🔌',t:'Infected USB stick',at:'usb',creds:[],d:'You’ve planted malware on a USB stick a contractor will bring on site to update a controller.'},
+ lotl:{ic:'🐉',t:'Hijacked edge device (Volt Typhoon-style)',at:'corpws',creds:['user','lotl'],hops:['internet','corpfw','corpws'],d:'You own an unpatched VPN appliance at the edge and a valid user login. You’ll use only built-in Windows tools, no malware: slower, but much harder to spot. Your mission is pre-positioning, not a quick hit.'}
 };
 const PXN={internet:'🌐 The internet',corpws:'💻 Business PC (IT)',jump:'🔐 Jump host (DMZ)',ews:'🛠️ Engineering workstation (OT)',plc:'⚙️ Cooling & pump PLC',usb:'🔌 USB stick in a contractor’s bag'};
 const pxReach=h=>HOSTS.filter(x=>x!==h&&x!=='vendor').map(x=>[x,(LISTEN[x]||[]).filter(s=>fwOK(h==='usb'?'internet':h,x,s))]).filter(r=>r[1].length);
@@ -2050,6 +2051,7 @@ function pxMoves(){const P=PX,at=P.at,c=P.creds,M=[];
   add('rdpews','🖥️ RDP straight to the engineering workstation',15,'Skip the DMZ and go directly into OT.');
   add('plcdirect','🏭 Send Modbus straight to the cooling PLC',10,'Talk to a controller from the business network.');
   add('replica','📈 Go back into OT through the historian replica',10,'The replica in the DMZ is fed from OT. Can you ride that connection backwards?');
+  add('steal','📂 Copy OT network diagrams from the IT file share',10,'Engineering documents often live on IT shares. Learn the plant before you touch it.');
   if(c.has('itadmin'))add('itadmin','👑 Use the IT domain-admin account on OT systems',15,'You stole an IT admin’s login. Does it work in OT?');}
  if((at==='corpws'||at==='internet')&&c.has('user')){add('vpnlogin','🔐 Log into the VPN with the stolen password',15,'Password is right. Then comes MFA.');add('mfaspam','📣 Spam MFA pushes until someone taps “approve”',30,'“MFA fatigue”: flood the phone with prompts.');}
  if(at==='internet'&&c.has('vendor'))add('vendorlogin','🧰 Log in with the old vendor account',15,'Vendor accounts often skip MFA as a “legacy exception”.');
@@ -2059,6 +2061,45 @@ function pxMoves(){const P=PX,at=P.at,c=P.creds,M=[];
  if(at==='ews'||at==='plc'){add('coil','✍️ Write a coil: stop the cooling fans',35,'A Modbus write the PLC will obey. The process reacts immediately.');
   if(at==='ews'){add('logic','📥 Download modified logic to the cooling PLC',30,'Change what the PLC does, Stuxnet-style. Quieter on the HMI, louder on the wire.');add('sis','⚠️ Reprogram the safety system (SIS)',25,'Disable the last line of defense, TRITON-style.');}}
  return M;}
+const PXMETA={
+ recon:{tt:['T0846 Remote System Discovery','T0840 Network Connection Enumeration'],min:25,real:'Every intrusion starts here. In 2015, the Ukraine grid attackers spent months mapping the network before acting.'},
+ creds:{tt:['Enterprise T1003 OS Credential Dumping'],min:15,real:'In the 2015 Ukraine attack, harvested credentials were later used to log into the utilities’ VPN.'},
+ steal:{tt:['T0811 Data from Information Repositories','T0882 Theft of Operational Information'],min:40,real:'CISA reported in 2024 that Volt Typhoon actors went after OT-related documents and network diagrams while pre-positioning in US critical infrastructure.'},
+ rdpews:{tt:['T0886 Remote Services'],min:5},
+ plcdirect:{tt:['T1692.001 Unauthorized Message: Command Message'],min:2},
+ replica:{tt:['T0886 Remote Services'],min:10,real:'One-way data flows (and data diodes) exist exactly to make this path impossible.'},
+ itadmin:{tt:['T0859 Valid Accounts'],min:5,real:'NotPetya (2017) spread across companies like Maersk using stolen admin credentials in shared, trusted domains.'},
+ vpnlogin:{tt:['T0822 External Remote Services','T0859 Valid Accounts'],min:3,real:'Colonial Pipeline (2021) began with a leaked password on a VPN account that had no MFA.'},
+ mfaspam:{tt:['Enterprise T1621 Multi-Factor Authentication Request Generation'],min:8,real:'Uber’s 2022 breach used MFA fatigue: repeated pushes until an employee approved one.'},
+ vendorlogin:{tt:['T0822 External Remote Services','T0859 Valid Accounts'],min:4,real:'The 2013 Target breach started with stolen credentials from an HVAC vendor.'},
+ modem:{tt:['T0883 Internet Accessible Device','T1694.001 Insecure Credentials: Default Credentials'],min:6,real:'In late 2023, CyberAv3ngers took over internet-exposed Unitronics controllers at US water utilities that still used default passwords.'},
+ usbin:{tt:['T0847 Replication Through Removable Media','T0864 Transient Cyber Asset'],min:4320,real:'Stuxnet crossed the air gap at Natanz on removable media.'},
+ jumpews:{tt:['T0886 Remote Services'],min:6},
+ jumphmi:{tt:['T0886 Remote Services'],min:6,real:'In Ukraine 2015, attackers used remote access to operators’ HMIs to open breakers while the operators watched.'},
+ coil:{tt:['T1692.001 Unauthorized Message: Command Message','T0831 Manipulation of Control'],min:1,stage:2,real:'FrostyGoop (2024, found by Dragos) sent Modbus TCP commands to heating controllers in Lviv, cutting heat to about 600 apartment buildings in winter.'},
+ logic:{tt:['T0843 Program Download','T0889 Modify Program'],min:12,stage:2,real:'Stuxnet changed PLC logic while showing operators recorded “normal” values.'},
+ sis:{tt:['T0858 Change Operating Mode','T0880 Loss of Safety (attempted)'],min:4,stage:2,real:'TRITON (2017) targeted a petrochemical plant’s safety controllers; it worked only because a key switch was left in PROGRAM.'}
+};
+const PXIP={internet:'203.0.113.45',corpws:'10.10.4.114',jump:'10.35.1.10',ews:'10.30.1.20',plc:'10.30.2.11',usb:'—'};
+function pxRaw(id,P,ok,t){const ts=t,src=PXIP[P.at]||'10.10.4.114';switch(id){
+ case'recon':return `${ts} OT-IDS/NETFLOW  ${src} → 64 hosts, 412 connection attempts in 9 min (scan-like fan-out)`;
+ case'creds':return `${ts} EDR CORP-PC-114  alert=CredentialAccess  process=lsass.exe handle opened by unsigned binary  user=CORP\\ap-clerk`;
+ case'steal':return `${ts} FS01 EventID=5145  share=\\\\CORP-FS01\\Engineering  objects=1,284 read in 6 min  user=CORP\\jsmith  src=10.10.4.114`;
+ case'rdpews':return ok?`${ts} OTFW-01 action=permit proto=tcp src=10.10.4.114:51544 dst=10.30.1.20:3389 rule="TEMP contractor RDP"`:`${ts} OTFW-01 action=deny proto=tcp src=10.10.4.114:51544 dst=10.30.1.20:3389 rule="IT-to-OT default deny"`;
+ case'plcdirect':return `${ts} OTFW-01 action=${ok?'permit':'deny'} proto=tcp src=10.10.4.114:50112 dst=10.30.2.11:502 rule="${ok?'ANY-ANY (legacy)':'IT-to-OT default deny'}"`;
+ case'replica':return `${ts} DMZFW-01 action=deny proto=tcp src=10.35.2.5:49810 dst=10.30.3.7:5450 rule="OT→DMZ only (replication)"`;
+ case'itadmin':return `${ts} OT-DC01 EventID=4625 logon failure  account=CORP\\it-admin  logon_type=3  status=0xC000006D (no such user in OT forest)`;
+ case'vpnlogin':return `${ts} IdP  MFA push DENIED  user=jsmith  reason=number_mismatch  src_ip=203.0.113.45 (Lagos, NG)`;
+ case'mfaspam':return `${ts} IdP  12 MFA pushes in 4 min  user=jsmith  result=12×DENIED  src_ip=203.0.113.45 → rule "MFA fatigue" fired`;
+ case'vendorlogin':return ok?`${ts} VPN-01 user=vendor-turbine login OK  mfa=EXEMPT  src_ip=198.51.100.23  work_order=none`:`${ts} VPN-01 user=vendor-turbine login FAILED  reason=account_disabled  src_ip=198.51.100.23`;
+ case'modem':return ok?`${ts} OT-IDS [HIGH] New talker 10.30.9.77 (MAC 00:1c:a8:…, cellular router) on Cooling PLC segment`:'';
+ case'usbin':return ok?`${ts} EWS-01 EventID=6416 new external device  USB\\VID_0781 "UPDATE_FW"  user=OT\\contractor-07`:`${ts} KIOSK-01 USB scan: 1 file quarantined (Trojan.Generic)  media=UPDATE_FW  user=contractor-07`;
+ case'jumpews':return `${ts} JUMP-01 RDP session  user=${P.creds.has('vendor')?'vendor-turbine':'jsmith-ot'} → EWS-01  work_order=none  recording=ON`;
+ case'jumphmi':return `${ts} OTFW-02 action=deny proto=tcp src=10.35.1.10:50321 dst=10.20.1.11:3389 rule="No remote HMI"`;
+ case'coil':return `${ts} OT-IDS [CRITICAL] Modbus write from unauthorized master  FC=05 Write Single Coil  ${P.at==='plc'?'10.30.9.77':'10.30.1.20'} → 10.30.2.11:502  coil=FAN2_RUN value=OFF  baseline: only SCADA-01 (10.20.1.5) writes`;
+ case'logic':return `${ts} OT-IDS [HIGH] Program download to Cooling PLC  src=EWS-01 (10.30.1.20)  outside change window  logic checksum ≠ golden copy`;
+ case'sis':return `${ts} SIS-01 program write REJECTED  key_switch=RUN  src=10.30.1.20  → DCS alarm "SIS diagnostic"`;}return '';}
+const pxClock=m=>{const d=Math.floor(m/1440),h=Math.floor(m%1440/60),mi=Math.floor(m%60);return `Day ${d+1} ${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}`;};
 const FIXGO={fw:t=>()=>{closePx();openFw(t);},id:()=>()=>{closePx();openId('acct');},ops:t=>()=>{closePx();openOps(t);}};
 function pxRun(id){const P=PX;if(P.done)return;const m=pxMoves().find(x=>x.id===id);if(!m)return;let r;const c=P.creds;
  switch(id){
@@ -2079,29 +2120,32 @@ function pxRun(id){const P=PX;if(P.done)return;const m=pxMoves().find(x=>x.id===
   case'coil':{const from=P.at==='plc'?'internet':'ews';const ok=P.at==='plc'||fwOK('ews','plc','modbus');
    r=ok?{ok:true,win:true,hops:P.at==='plc'?['plc','cooling']:['ews','plc','cooling'],msg:'The PLC obeys: Modbus has no authentication. Two cooling fans spin down and condenser vacuum starts to drop.',alert:'OT IDS: Modbus WRITE to Cooling PLC from '+(P.at==='plc'?'10.30.9.77':'EWS-01')+' (not SCADA)',ctl:3}:{ok:false,msg:'The control-network firewall blocks Modbus from the EWS.',ctl:2};break;}
   case'logic':r=fwOK('ews','plc','eng')?{ok:true,win:true,hops:['ews','plc','cooling'],msg:'New logic is running on the cooling PLC. The HMI still looks normal; only the golden-copy compare and the IDS will notice.',alert:'OT IDS: program download to Cooling PLC outside a change window',ctl:3}:{ok:false,msg:'Blocked by the control-network firewall.',ctl:2};break;
+  case'steal':P.intel=true;r={ok:true,msg:'You find <b>“Cooling upgrade 2019.vsdx”</b> and a vendor support guide. They show a <b>cellular modem</b> wired to the cooling PLC network and a <b>turbine-vendor login</b> that “must stay enabled”. Now you know exactly where the weak doors are.',alert:'File share: bulk read of \\\\CORP-FS01\\Engineering\\OT by jsmith',ctl:3};break;
   case'sis':r={ok:false,msg:'The safety controller’s key switch is in RUN, so it rejects new programs. (TRITON in 2017 worked because the key was left in PROGRAM.) The attempt shows up as an SIS alarm.',alert:'SIS: program write rejected (key switch in RUN)',ctl:2};break;}
- P.noise+=m.n;if(r.alert){P.noise+=r.ok?0:5;secAdd({who:'attacker (pentest mode)',act:r.alert,from:PXN[P.at]||P.at,to:'—',auth:'none',how:'Pentest mode · simulated',res:r.ok?'warn':'deny',dom:'ot'},1);}
- P.log.push({t:m.t,ok:r.ok,msg:r.msg,ctl:r.ctl,fix:r.fix,alert:r.alert,n:m.n});
+ const MT=PXMETA[id]||{},stg=MT.stage||(['ews','plc'].includes(r.to||P.at)&&!['jumpews','usbin','modem'].includes(id)?2:1);const quiet=c.has('lotl')&&stg===1&&id!=='creds';
+ const nAdd=quiet?Math.ceil(m.n/2):m.n;P.clock+=(MT.min||5)*(quiet?3:1);const raw=pxRaw(id,P,r.ok,pxClock(P.clock));
+ P.noise+=nAdd;if(r.alert){P.noise+=r.ok?0:5;secAdd({who:'attacker (pentest mode)',act:r.alert,from:PXN[P.at]||P.at,to:'—',auth:'none',how:'Pentest mode · simulated',res:r.ok?'warn':'deny',dom:'ot'},1);}
+ P.log.push({t:m.t,ok:r.ok,msg:r.msg,ctl:r.ctl,fix:r.fix,alert:r.alert,n:nAdd,tt:MT.tt||[],real:MT.real,stg,raw,quiet,clock:pxClock(P.clock)});
  if(WK){try{if(r.hops)animPath(r.hops,r.ok?0xef4444:0x64748b,null,m.t.replace(/^\S+\s/,''));else if(r.pts)animPath(null,0xef4444,[wpos('internet'),wpos('plc')]);const tgt=r.to||P.at;if(wpos(tgt))pulseAt(wpos(tgt).clone(),r.ok?0xef4444:0x94a3b8);}catch(e){}}
  if(r.to){P.at=r.to;P.path.push(r.to);if(WK)idRings(P.path.filter(x=>wpos(x)),0xef4444);}
  if(r.win){P.done='win';P.path.push('plc');try{SIM.fans[1]=0;SIM.fans[2]=0;alarm('Fans 2 & 3 stopped (pentest mode: attacker reached the PLC)','hi');}catch(e){}}
  else if(P.noise>=100){P.done='caught';}
  renderPx();}
-function pxStart(k){const S=PXS[k];if(S.avail&&!S.avail())return;Object.assign(PX,{start:k,at:S.at,creds:new Set(S.creds),noise:0,log:[],done:false,path:[S.at]});
+function pxStart(k){const S=PXS[k];if(S.avail&&!S.avail())return;Object.assign(PX,{start:k,at:S.at,creds:new Set(S.creds),noise:0,log:[],done:false,path:[S.at],clock:120+Math.floor(Math.random()*60),intel:false});PX.clock0=PX.clock;
  if(WK){try{if(S.hops)animPath(S.hops,0xef4444,null,'initial access');idRings([S.at].filter(x=>wpos(x)),0xef4444);}catch(e){}}renderPx();}
 async function openPx(){closeAll&&closeAll();PX.on=true;if(!isWalk)await setView('walk');try{overview(new THREE.Vector3(14,4,8),62);sheet.classList.add('collapsed');}catch(e){}if(WK&&isLocked())document.exitPointerLock();pxEl.classList.add('show');renderPx();}
 function closePx(){pxEl.classList.remove('show');PX.on=false;try{idRings([]);}catch(e){}}
 function renderPx(){const P=PX;let h=`<div class="fwh"><b>🕹️ Pentest mode</b><span class="hint">Simulated attack on the fictional plant · no real tools or commands</span><button class="hx" id="pxX">✕</button></div><div class="idb">`;
- if(!P.start){h+=`<p>Pick a starting foothold, then choose your moves. Every move makes <b>noise</b>; reach 100 and the SOC contains you. Your goal: <b>stop the cooling fans</b>. What works depends on how the lab is configured right now, so fix things and replay.</p>`+
+ if(!P.start){h+=`<p>Pick a starting foothold, then choose your moves. Every move makes <b>noise</b>; reach 100 and the SOC contains you. Your goal: <b>stop the cooling fans</b>. What works depends on how the lab is configured right now, so fix things and replay. Each move is tagged with its <b>MITRE ATT&CK for ICS</b> technique and shows the raw log a defender would see.</p>`+
    Object.entries(PXS).map(([k,s])=>{const av=!s.avail||s.avail();return `<button class="item pxs" data-pxs="${k}" ${av?'':'disabled'}><span style="font-size:20px">${s.ic}</span><div><b>${s.t}</b>${PROG['px_'+k]?' 🏅':''}<small>${av?s.d:s.off}</small></div></button>`;}).join('');}
  else{const S=PXS[P.start],pct=Math.min(100,P.noise);
-  h+=`<div class="pxat">${S.ic} <b>${S.t}</b> → you are on <b>${PXN[P.at]||P.at}</b>${P.creds.size?` · 🔑 ${[...P.creds].join(', ')}`:''}</div>
+  h+=`<div class="pxat">⏱️ ${pxClock(P.clock)} · ${['ews','plc'].includes(P.at)?'<b style="color:#fca5a5">ICS Kill Chain Stage 2</b> (inside OT)':'ICS Kill Chain Stage 1 (IT / DMZ)'}${P.creds.has('lotl')?' · 🐉 living off the land':''}<br>${S.ic} <b>${S.t}</b> → you are on <b>${PXN[P.at]||P.at}</b>${P.creds.size?` · 🔑 ${[...P.creds].join(', ')}`:''}</div>
    <div class="pxnz"><div style="width:${pct}%;background:${pct<50?'#22c55e':pct<80?'#f59e0b':'#ef4444'}"></div><span>Noise ${P.noise}/100</span></div>`;
   if(!P.done)h+=pxMoves().map(m=>`<button class="item pxm" data-pxm="${m.id}"><div><b>${m.t}</b> <span class="pxn">+${m.n}</span><small>${m.d}</small></div></button>`).join('');
   else{const win=P.done==='win';const stars=win?(P.noise<50?3:P.noise<80?2:1):0;if(win&&stars>(PROG['px_'+P.start]||0)){PROG['px_'+P.start]=stars;saveProg();}
-   h+=`<div class="rsum ${win?'bad':'good'}">${win?`🏴 <b>Objective reached</b> with ${P.noise} noise ${'⭐'.repeat(stars)}. In a real plant the operators now have a cooling emergency.`:'🛡️ <b>Caught.</b> Your noise crossed 100 and the SOC isolated you. The defenses worked.'}</div>
+   h+=`<div class="rsum ${win?'bad':'good'}">${win?`🏴 <b>Objective reached</b> with ${P.noise} noise ${'⭐'.repeat(stars)}. In a real plant the operators now have a cooling emergency. Time from first access: <b>${(()=>{const e=P.clock-P.clock0,d=Math.floor(e/1440),h=Math.floor(e%1440/60),mi=e%60;return (d?d+' d ':'')+(h?h+' h ':'')+mi+' min';})()}</b>.`:'🛡️ <b>Caught.</b> Your noise crossed 100 and the SOC isolated you. The defenses worked.'}</div>
     <h4>What would stop this path</h4>${P.log.filter(l=>l.ok&&l.fix).map((l,i)=>`<div class="afd crit"><b>⚠️ ${l.t.replace(/^\S+\s/,'')}</b><div>${l.msg}</div><button class="btn chip" data-pxf="${P.log.indexOf(l)}">${l.fix[0]}</button></div>`).join('')||'<p class="hint">Nothing to fix: every step you got through was an allowed path. Detection (Control 3) is what caught you.</p>'}`;}
-  h+=`<h4>Your moves</h4>${P.log.slice().reverse().map(l=>`<div class="afd ${l.ok?'crit':'ok'}"><b>${l.ok?'✔️':'⛔'} ${l.t.replace(/^\S+\s/,'')}</b> <span class="pxn">+${l.n}</span><div>${l.msg}</div>${l.alert?`<div class="hint">🚨 Defender sees: ${l.alert}</div>`:''}${l.ctl?`<div class="hint">🛡️ Critical Control ${l.ctl}: ${FCC[l.ctl-1].t}</div>`:''}</div>`).join('')||'<p class="hint">No moves yet.</p>'}
+  h+=`<h4>Your moves</h4>${P.log.slice().reverse().map(l=>`<div class="afd ${l.ok?'crit':'ok'}"><b>${l.ok?'✔️':'⛔'} ${l.t.replace(/^\S+\s/,'')}</b> <span class="pxn">+${l.n}</span> <span class="hint">${l.clock} · Stage ${l.stg}</span><div>${l.msg}</div>${l.tt.length?`<div class="pxtt">${l.tt.map(x=>`<span>${x}</span>`).join('')}</div>`:''}${l.raw?`<pre class="pxraw">${l.quiet?'# blends in with normal admin activity; only a hunt would find it\n':''}${l.raw}</pre>`:''}${l.real?`<div class="hint">📰 Real world: ${l.real}</div>`:''}${l.ctl?`<div class="hint">🛡️ Critical Control ${l.ctl}: ${FCC[l.ctl-1].t}</div>`:''}</div>`).join('')||'<p class="hint">No moves yet.</p>'}
    <div style="display:flex;gap:8px;margin-top:8px"><button class="btn" id="pxR">↩ New foothold</button><button class="btn" id="pxSoc">🔍 See it in the SOC</button></div>`;}
  h+='</div>';pxEl.innerHTML=h;
  pxEl.querySelector('#pxX').onclick=closePx;pxEl.querySelectorAll('[data-pxs]').forEach(b=>b.onclick=()=>pxStart(b.dataset.pxs));pxEl.querySelectorAll('[data-pxm]').forEach(b=>b.onclick=()=>pxRun(b.dataset.pxm));
@@ -2144,11 +2188,11 @@ function stxNarr(ic,t,p,nx){stxCard(`<div class="head"><div class="ic">${ic}</di
 function stxRun(){simReset('run22');try{overview(new THREE.Vector3(26,3,14),78);}catch(e){}
  const at=id=>{try{pulseAt(wpos(id).clone(),0xef4444);idRings([id],0xef4444);}catch(e){}};
  at('ews');secAdd({who:'contractor (vendor)',act:'Removable media mounted on EWS-01',from:'USB',to:'EWS-01',auth:'none',how:'Stuxnet remix',res:'warn',dom:'ot'},1);
- stxNarr('🔌','Day 1 · A USB stick','A contractor plugs a USB stick into the <b>engineering workstation</b> to load a firmware update. Hidden on it is malware that runs as soon as the folder is opened. Nothing visible happens.',()=>{
+ stxNarr('🔌','Day 1 · A USB stick','A contractor plugs a USB stick into the <b>engineering workstation</b> to load a firmware update. Hidden on it is malware that runs as soon as the folder is opened. Nothing visible happens.<div class="pxtt"><span>T0847 Replication Through Removable Media</span><span>T0864 Transient Cyber Asset</span></div>',()=>{
   try{animPath(['ews','plc'],0xef4444,null,'logic download');}catch(e){}at('plc');secAdd({who:'EWS-01',act:'Program download to Cooling PLC (outside change window)',from:'EWS-01',to:'Cooling & pump PLC',auth:'none',how:'Stuxnet remix · OT IDS alert',res:'warn',dom:'ot'},1);
-  stxNarr('🧬','Day 21 · The logic changes','The malware waited three weeks for an engineer to open the cooling PLC project. Last night it slipped two new blocks into the PLC: one <b>cycles the fan drives</b> between racing and crawling, and one <b>records normal values for 30 seconds and replays them</b> to SCADA. The OT IDS logged the download, but nobody was watching it.',()=>{
+  stxNarr('🧬','Day 21 · The logic changes','The malware waited three weeks for an engineer to open the cooling PLC project. Last night it slipped two new blocks into the PLC: one <b>cycles the fan drives</b> between racing and crawling, and one <b>records normal values for 30 seconds and replays them</b> to SCADA. The OT IDS logged the download, but nobody was watching it.<div class="pxtt"><span>T0873 Project File Infection</span><span>T0843 Program Download</span><span>T0889 Modify Program</span></div>',()=>{
    STX.snap=JSON.parse(JSON.stringify(SIM));STX.spoof=true;STX.attack=true;try{idRings(['plc','cooling'],0xef4444);}catch(e){}
-   stxNarr('🎭','Tonight · Everything looks normal','The attack is live. <b>Open the HMI</b> (M): every value is green. Then <b>walk to the cooling tower</b> or listen: the fans are surging. The HMI, alarms and PI trends are all showing the recording.',()=>stxQ());});});}
+   stxNarr('🎭','Tonight · Everything looks normal','The attack is live. <b>Open the HMI</b> (M): every value is green. Then <b>walk to the cooling tower</b> or listen: the fans are surging. The HMI, alarms and PI trends are all showing the recording.<div class="pxtt"><span>T1692.002 Unauthorized Message: Reporting Message</span><span>T0878 Alarm Suppression</span><span>T0832 Manipulation of View</span><span>T0831 Manipulation of Control</span></div>',()=>stxQ());});});}
 function stxQ(){const Q=STXQ[STX.q];if(!Q)return stxEnd();
  stxCard(`<div class="head"><div class="ic">❓</div><div><h2>${Q.t}</h2><div class="tag">Decision ${STX.q+1} of ${STXQ.length}</div></div></div><div class="body"><p>${Q.q}</p><div class="rpick">${Q.o.map(o=>`<button class="btn chip" data-sx="${o[0]}" style="display:block;width:100%;text-align:left;margin:4px 0">${o[1]}</button>`).join('')}</div></div>`);
  sc.querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{const o=Q.o.find(x=>x[0]===b.dataset.sx);STX.score+=o[2];
@@ -2911,7 +2955,7 @@ async function initWalk(){
       for(let i=0;i<n;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(p.r*.6,8,6),new THREE.MeshBasicMaterial({color:c.clone().lerp(new THREE.Color(0xffffff),.3)}));s.userData={t:i/n,speed:1.6/len,curve:path,pipe:1,v:p.v};scene.add(s);W.packets.push(s);}}});
   // trees / fence for atmosphere
   for(let i=0;i<26;i++){const a=i/26*Math.PI*2,r=58+Math.sin(i*7)*8;const tx=30+Math.cos(a)*r,tz=5+Math.sin(a)*r;if(tx>22&&tz>28)continue;const tr=new THREE.Mesh(new THREE.ConeGeometry(1.6,5,8),wM(0x3f6212));tr.position.set(tx,2.5,tz);scene.add(tr);}
-  buildTown(W);buildBrand(W);buildExtras(W);buildGags(W);buildNetPaths(W);buildXray(W);addPenetrations(W);cableBoots(W);
+  buildTown(W);buildBrand(W);buildExtras(W);buildNetPaths(W);buildXray(W);addPenetrations(W);cableBoots(W);
   WK=W;
   // stops
   stopsRow.innerHTML='';STOPS.forEach((s,i)=>{const b=document.createElement('button');b.className='btn chip';b.textContent=(DESK?(i===STOPS.length-1?'[O] ':i<10?`[${(i+1)%10}] `:''):'')+s[0];b.onclick=()=>goStop(i);stopsRow.appendChild(b);});
@@ -3835,7 +3879,7 @@ const PFIND=[
   title:'PLC accepts Modbus writes from any host',
   obs:'The Cooling & pump PLC answers Modbus-TCP (502) writes from any source on the OT network, not just the SCADA server. Modbus has no authentication.',
   impact:'Any compromised host in OT can write coils and registers directly — stop fans and pumps, falsify values. This is exactly how the 2024 FrostyGoop malware manipulated heating controllers.',
-  fix:'Restrict writes to the SCADA server’s IP with an industrial firewall / DPI; use Modbus/TCP Security where supported; alert on writes from unexpected sources.',att:'T0855 Unauthorized Command Message · T0836 Modify Parameter'},
+  fix:'Restrict writes to the SCADA server’s IP with an industrial firewall / DPI; use Modbus/TCP Security where supported; alert on writes from unexpected sources.',att:'T1692.001 Unauthorized Message: Command Message · T0836 Modify Parameter'},
  {id:'f_sis',node:'sis',area:'L1 · Safety system room',type:'sis',sev:'crit',scope:['ext','full'],
   title:'Safety system key switch left in PROGRAM',
   obs:'The SIS controller’s physical key switch is in <b>PROGRAM</b> (not RUN), the key is in the lock, and its engineering software is installed on the shared engineering workstation.',
@@ -3845,7 +3889,7 @@ const PFIND=[
   title:'Protective relays on default passwords; GOOSE unauthenticated',
   obs:'The protection relays still have the vendor default password, and GOOSE trip messages on the substation LAN are not authenticated.',
   impact:'An attacker on the substation network can change protection settings or spoof a GOOSE frame to trip a breaker — part of the Industroyer playbook.',
-  fix:'Set unique strong relay passwords, enforce settings-change control, and enable IEC 62351-6 GOOSE authentication; monitor for unexpected GOOSE publishers.',att:'T0812 Default Credentials · T0836 Modify Parameter'},
+  fix:'Set unique strong relay passwords, enforce settings-change control, and enable IEC 62351-6 GOOSE authentication; monitor for unexpected GOOSE publishers.',att:'T1694.001 Default Credentials · T0836 Modify Parameter'},
  {id:'f_hist',node:'dmzhist',area:'L3.5 · DMZ floor',type:'dataflow',sev:'high',scope:['full'],
   title:'DMZ replica initiates connections inbound to OT',
   obs:'The historian replica in the DMZ is configured to <b>pull</b> data by opening a connection into the OT historian, rather than receiving a push from OT.',
@@ -4069,7 +4113,7 @@ const GL=[
  ['MFA','Multi-Factor Authentication','sec','Login requiring something beyond a password, such as a phone approval or hardware key. The single most effective control against stolen-password attacks.','jump'],
  ['PAM','Privileged Access Management','sec','Tools that control, approve, record and rotate credentials for admin and vendor access.','jump'],
  ['CCE','Consequence-driven Cyber-informed Engineering','sec','An Idaho National Laboratory methodology that starts from the worst physical consequences (e.g. destroying the turbine) and works backward to engineer them out, including with non-digital safeguards.'],
- ['ATT&CK for ICS','MITRE ATT&CK for ICS','sec','A public knowledge base of how adversaries attack industrial systems, organized as tactics and techniques (e.g. T0855 Unauthorized Command Message). Used to map findings and detections.'],
+ ['ATT&CK for ICS','MITRE ATT&CK for ICS','sec','A public knowledge base of how adversaries attack industrial systems, organized as tactics and techniques (e.g. T1692.001 Unauthorized Message: Command Message). Used to map findings and detections.'],
  ['MW / MWh','Megawatt / Megawatt-hour','proc','MW is power, the rate at which electricity is produced right now. MWh is energy, power over time. A 25 MW plant running for one hour produces 25 MWh.','generator'],
  ['MVAr','Megavolt-ampere reactive','proc','Reactive power: it doesn’t do useful work but keeps grid voltage up. Generators provide it through their excitation system.','generator'],
  ['kV','Kilovolt','proc','Thousands of volts. Generators output around 13.8 kV; step-up transformers raise it to transmission levels (69–500 kV) to move power efficiently.','xfmr'],
@@ -4229,14 +4273,41 @@ function folShow(){const F=FOL,st=F.steps[F.i],n=F.names?{ic:'',n:F.names[F.i]}:
   document.getElementById('folN').onclick=folNext;document.getElementById('folX').onclick=endFollow;
   const sk=document.getElementById('folSkip');if(sk)sk.onclick=endFollow;}
 function folNext(){const F=FOL;if(!F)return;if(F.i>=F.path.length-1)return endFollow();
-  F.seg=smoothSeg(F.segsPre?F.segsPre[F.i]:folSeg(F.path[F.i],F.path[F.i+1]));F.len=Math.max(1,F.seg.getLength());F.speed=F.segsPre?Math.min(40,Math.max(6,F.len/5)):Math.min(12,Math.max(5,F.len/6));F.t=0;F.st=0;F.vm=null;F.paused=false;F.boost=false;F.i++;
+  F.seg=smoothSeg(F.segsPre?F.segsPre[F.i]:folSeg(F.path[F.i],F.path[F.i+1]));F.len=Math.max(1,F.seg.getLength());F.speed=F.segsPre?Math.min(40,Math.max(6,F.len/5)):Math.min(12,Math.max(5,F.len/6));F.t=0;F.st=0;F.vm=null;F.paused=false;F.boost=false;F.i++;try{F.near=folNear(F.seg);}catch(e){F.near=null;}{const p0=F.seg.getPointAt(0);let b=null;for(let u=0;u<=1;u+=.02){const tg=F.seg.getTangentAt(u);if(tg.x*tg.x+tg.z*tg.z>.25){b=new THREE.Vector3(tg.x,0,tg.z).normalize();break;}}if(!b)b=F.hdir.clone();F.hdir.copy(b);
+  if(!_RC){_RC=new THREE.Raycaster();_AX=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].map(a=>new THREE.Vector3(...a));}
+  let ct=p0.clone().addScaledVector(b,-2.3).add(new THREE.Vector3(0,.4,0));try{ct=folCollide(p0.clone(),ct);}catch(e){}
+  F.ch=[];for(let k=0;k<=12;k++)F.ch.push(p0.clone().lerp(ct.clone().sub(new THREE.Vector3(0,.4,0)),k/12));
+  try{const W=WK,cam0=W.camera.position,fwd=new THREE.Vector3(0,0,-1).applyQuaternion(W.camera.quaternion);fwd.y=0;fwd.normalize();const d=ct.clone().sub(cam0),L=d.length();let blocked=false;
+   if(L>.3&&F.near){_RC.set(cam0,d.clone().normalize());_RC.near=0;_RC.far=L;blocked=_RC.intersectObjects(F.near,false).length>0;}
+   if(blocked||fwd.dot(b)<-.2){W.camera.position.copy(ct);const m=new THREE.Matrix4().lookAt(ct,p0.clone().addScaledVector(b,2),new THREE.Vector3(0,1,0));W.camera.quaternion.setFromRotationMatrix(m);F.st=1.2;}}catch(e){}}
   const n=F.names?{n:F.names[F.i]}:NM[F.path[F.i]],st=F.steps[F.i];
   sc.innerHTML=`<div class="head"><div class="ic">🎢</div><div><h2>Riding to ${n?n.n:F.path[F.i]}…</h2><div class="tag">${st.proto[0]} · stop ${F.i+1} of ${F.path.length}</div></div></div><div class="nav"><button class="btn" id="folX">✕ Exit</button><button class="btn" id="folB">⏩ Faster</button></div>`;
   sheet.classList.remove('collapsed');document.getElementById('folX').onclick=endFollow;document.getElementById('folB').onclick=()=>{F.boost=!F.boost;document.getElementById('folB').classList.toggle('on',F.boost);};}
+function folColCand(){const W=WK;if(W.__colCand&&W.__colN===W.scene.children.length)return W.__colCand;const out=[];W.scene.updateMatrixWorld(true);
+  W.scene.traverse(m=>{if(!m.isMesh||!m.visible||!m.material||m.material.visible===false||(m.material.transparent&&(m.material.opacity<.25||m.material.depthWrite===false&&m.material.opacity<.3))||m.userData.link||m.userData.pipe)return;const g=m.geometry;if(!g)return;g.boundingSphere||g.computeBoundingSphere();if(!g.boundingSphere)return;
+   const c=g.boundingSphere.center.clone().applyMatrix4(m.matrixWorld),sc=m.matrixWorld.getMaxScaleOnAxis(),r=g.boundingSphere.radius*sc;if(r>200)return;out.push({m,c,r});});
+  W.__colCand=out;W.__colN=W.scene.children.length;return out;}
+function folNear(seg){const F=FOL,c=folColCand(),pts=[];for(let i=0;i<=24;i++)pts.push(seg.getPointAt(i/24));const skip=new Set([F.pk,...F.trail]);
+  return c.filter(o=>!skip.has(o.m)&&pts.some(p=>p.distanceTo(o.c)<o.r+3)).map(o=>o.m);}
+let _RC=null,_AX=null;
+function folCollide(p,camT){const F=FOL;if(!F.near||!F.near.length)return camT;if(!_RC){_RC=new THREE.Raycaster();_AX=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].map(a=>new THREE.Vector3(...a));}const dir=camT.clone().sub(p),dist=dir.length();if(dist<.05)return camT;dir.normalize();
+  _RC.set(p,dir);_RC.near=.08;_RC.far=dist+.3;const h=_RC.intersectObjects(F.near,false)[0];if(h)camT=p.clone().addScaledVector(dir,Math.max(.6,h.distance-.3));
+  for(let k=0;k<2;k++)for(const a of _AX){_RC.set(camT,a);_RC.near=0;_RC.far=.6;const hh=_RC.intersectObjects(F.near,false)[0];if(hh)camT.addScaledVector(a,-(.6-hh.distance)*.9);}
+  return camT;}
+function folBestView(p){const F=FOL,h=F.hdir.clone(),side=new THREE.Vector3(-h.z,0,h.x);let best=null,bd=-1;
+  for(const [d,up] of [[h.clone().negate(),1.2],[h.clone().negate(),2.2],[side,1.3],[side.clone().negate(),1.3],[h,1.3],[h.clone().negate().add(side).normalize(),1.6],[h.clone().negate().sub(side).normalize(),1.6]]){
+   const want=p.clone().addScaledVector(d,3).add(new THREE.Vector3(0,up,0)),got=folCollide(p.clone(),want.clone()),dd=got.distanceTo(p)-want.distanceTo(got)*.5;if(dd>bd){bd=dd;best=got;}}
+  return best;}
+function folFade(dt,p,cam){const F=FOL;if(!F.faded)F.faded=new Map();const want=new Set();
+  if(F.near&&F.near.length&&_RC){const dir=cam.clone().sub(p),dist=dir.length();if(dist>.1){dir.normalize();_RC.set(p,dir);_RC.near=.05;_RC.far=dist+.25;_RC.intersectObjects(F.near,false).forEach(h=>want.add(h.object));}
+   for(const a of _AX){_RC.set(cam,a);_RC.near=0;_RC.far=.55;const h=_RC.intersectObjects(F.near,false)[0];if(h)want.add(h.object);}}
+  want.forEach(m=>{if(Array.isArray(m.material)||F.faded.has(m))return;const orig=m.material,cl=orig.clone();cl.transparent=true;cl.depthWrite=false;F.faded.set(m,{orig,cl,op:1});m.material=cl;});
+  F.faded.forEach((o,m)=>{const tgt=want.has(m)?.12:1;o.op+=(tgt-o.op)*Math.min(1,dt*10);o.cl.opacity=o.op*(o.orig.opacity==null?1:o.orig.opacity);if(tgt===1&&o.op>.97){m.material=o.orig;o.cl.dispose();F.faded.delete(m);}});}
+function folUnfade(){const F=FOL;if(!F||!F.faded)return;F.faded.forEach((o,m)=>{m.material=o.orig;o.cl.dispose();});F.faded.clear();}
 function smoothSeg(c){try{const L=c.getLength();if(!(L>0.5))return c;const n=Math.max(8,Math.ceil(L/0.25));let pts=[];for(let i=0;i<=n;i++)pts.push(c.getPointAt(i/n));
   for(let it=0;it<3;it++){const q=[pts[0]];for(let i=0;i<pts.length-1;i++){const A=pts[i],B=pts[i+1];q.push(A.clone().lerp(B,.25),A.clone().lerp(B,.75));}q.push(pts[pts.length-1]);pts=q;}
   const cr=new THREE.CatmullRomCurve3(pts,false,'centripetal');cr.arcLengthDivisions=Math.max(200,pts.length*2);return cr;}catch(e){return c;}}
-function folArrive(){const F=FOL;F.paused=true;F.at=F.seg.getPointAt(1);const tg=F.seg.getTangentAt(1);F.seg=null;tg.y=0;if(tg.lengthSq()>1e-4)F.hdir.copy(tg.normalize());pulseAt(F.at.clone(),0xfde047);folShow();}
+function folArrive(){const F=FOL;F.paused=true;F.at=F.seg.getPointAt(1);const tg=F.seg.getTangentAt(1);F.seg=null;tg.y=0;if(tg.lengthSq()>1e-4)F.hdir.copy(tg.normalize());try{F.view=folBestView(F.at.clone());}catch(e){F.view=null;}pulseAt(F.at.clone(),0xfde047);folShow();}
 let _UP,_M4,_Q;
 function folUpdate(dt){const W=WK,F=FOL;if(!F)return;{const nr=F.seg?0.45:0.2;if(Math.abs(W.camera.near-nr)>.01){W.camera.near=nr;W.camera.updateProjectionMatrix();}}if(!_UP){_UP=new THREE.Vector3(0,1,0);_M4=new THREE.Matrix4();_Q=new THREE.Quaternion();}const port=innerWidth<innerHeight;
   if(F.seg&&!F.paused){F.st=(F.st||0)+dt;const Ln=F.len,d=F.t*Ln,rem=Ln-d;
@@ -4256,19 +4327,22 @@ function folUpdate(dt){const W=WK,F=FOL;if(!F)return;{const nr=F.seg?0.45:0.2;if
     const behind=(dist)=>{let acc=0;for(let i=1;i<F.ch.length;i++){const sg=F.ch[i-1].distanceTo(F.ch[i]);if(acc+sg>=dist)return F.ch[i-1].clone().lerp(F.ch[i],(dist-acc)/sg);acc+=sg;}return F.ch[F.ch.length-1].clone();};
     const ahead=(dist)=>{const ta=F.t+dist/Ln;return ta<=1?F.seg.getPointAt(ta):F.seg.getPointAt(1).addScaledVector(F.seg.getTangentAt(1),(ta-1)*Ln*.35);};
     const tg=F.seg.getTangentAt(F.t);const h=new THREE.Vector3(tg.x,0,tg.z);if(h.lengthSq()>.04)F.hdir.lerp(h.normalize(),.12).normalize();
-    camT=behind(2.2).add(new THREE.Vector3(0,.35,0));
+    camT=behind(2.3).add(new THREE.Vector3(0,.4,0));
     lookT=ahead(1.4).multiplyScalar(.4).add(ahead(3.2).multiplyScalar(.35)).add(ahead(6).multiplyScalar(.25)).add(new THREE.Vector3(0,.1,0));
+    {const vy=Math.abs(F.seg.getTangentAt(Math.min(1,F.t+.6/Ln)).y),w=Math.max(0,Math.min(1,(vy-.45)/.4));if(w>0){const pp=F.pk.position,side=pp.clone().addScaledVector(F.hdir,-2.6).add(new THREE.Vector3(0,.35,0));F.vw=(F.vw||0)+(w-(F.vw||0))*Math.min(1,dt*3);camT.lerp(side,F.vw*F.vw*(3-2*F.vw));}else F.vw=(F.vw||0)*Math.max(0,1-dt*3);
+     if(F.vw>.05)lookT.lerp(F.pk.position.clone(),F.vw);}
     const k=Math.min(1,(F.st||0)/0.9),rate=2.5+9*k*k;   // gentle swoop in, then stay tight on the path
     W.camera.position.lerp(camT,1-Math.exp(-dt*rate));}
-  else{camT=p.clone().addScaledVector(F.hdir,-3.0).add(new THREE.Vector3(0,1.2,0));lookT=p.clone();
+  else{camT=F.view?F.view.clone():folCollide(p.clone(),p.clone().addScaledVector(F.hdir,-3.0).add(new THREE.Vector3(0,1.2,0)));lookT=p.clone();
     const sheetUp=!sheet.classList.contains('collapsed')&&sc.querySelector('.body');if(sheetUp)lookT.y-=port?1.5:.5;
     W.camera.position.lerp(camT,1-Math.exp(-dt*3));}
   {const dir=lookT.clone().sub(W.camera.position),hz=Math.hypot(dir.x,dir.z),need=Math.abs(dir.y)/2.2;if(hz<need)lookT.addScaledVector(F.hdir,need-hz);}   // never look straight up/down: no roll flips in risers
   const kr=F.seg?Math.min(1,(F.st||0)/1.1):1;
-  _M4.lookAt(W.camera.position,lookT,_UP);_Q.setFromRotationMatrix(_M4);{const ang=W.camera.quaternion.angleTo(_Q),want=ang*(1-Math.exp(-dt*(F.seg?1.4+2.8*kr*kr:3))),cap=dt*(F.seg?(F.boost?3.2:1.9):2.4);W.camera.quaternion.rotateTowards(_Q,Math.min(want,cap));}
+  _M4.lookAt(W.camera.position,lookT,_UP);_Q.setFromRotationMatrix(_M4);{const ang=W.camera.quaternion.angleTo(_Q),want=ang*(1-Math.exp(-dt*(F.seg?1.4+2.8*kr*kr:3))),cap=dt*(F.seg?(F.boost?4.5:3.0):2.6);W.camera.quaternion.rotateTowards(_Q,Math.min(want,cap));}
+  if(!_RC){_RC=new THREE.Raycaster();_AX=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].map(a=>new THREE.Vector3(...a));}try{folFade(dt,F.pk.position,W.camera.position);}catch(e){}
   if(F.seg&&F.t>=1)folArrive();
   const v=p.clone();v.y+=.6;v.project(W.camera);if(v.z>1||F.seg){F.lbl.style.visibility='hidden';}else{F.lbl.style.visibility='';F.lbl.style.transform=`translate(${(v.x+1)/2*innerWidth}px,${(1-v.y)/2*innerHeight}px) translate(-50%,-100%)`;}}
-function endFollow(){const F=FOL;if(!F)return;const W=WK;W.camera.near=0.05;W.camera.updateProjectionMatrix();W.scene.remove(F.pk);F.trail.forEach(s=>W.scene.remove(s));F.lbl.remove();folPill.style.display='none';FOL=null;
+function endFollow(){const F=FOL;if(!F)return;const W=WK;folUnfade();W.camera.near=0.05;W.camera.updateProjectionMatrix();W.scene.remove(F.pk);F.trail.forEach(s=>W.scene.remove(s));F.lbl.remove();folPill.style.display='none';FOL=null;
   clearHL();SIM.paused=false;W.camera.rotation.order='YXZ';setWalkMode(F.prev.mode==='over'?'over':'walk');
   if(F.prev.mode!=='over'){W.floor=F.prev.fl;W.pos.set(F.prev.x,1.7,F.prev.z);W.yaw=F.prev.yaw;W.pitch=F.prev.pitch;}else if(F.prev.cam){W.ov=null;W.camera.position.copy(F.prev.cam);if(F.prev.oyaw!==undefined){W.oyaw=F.prev.oyaw;W.opitch=F.prev.opitch;}W.camera.rotation.set(W.opitch,W.oyaw,0,'YXZ');}
   sheet.classList.add('collapsed');if(F.hmiWas)openHMI();if(F.lapWas)openLaptop();}
