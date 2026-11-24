@@ -14,8 +14,8 @@ simulation; it's a hands-on, gamified way to learn the basics.
 | 📦 Ride a packet: HMI → SCADA → PLC → cooling tower | 💥 Safeties off + breaker opened under load |
 |---|---|
 | ![Packet ride](previews/packet-ride.gif) | ![Generator explosion](previews/generator-explosion.gif) |
-| **🌀 Unit 1 start-up: the turbine spins up and syncs to the grid** | **🚀 Find the hidden RPG… and bring the building down** |
-| ![Turbine spin-up](previews/turbine-spinup.gif) | ![RPG destruction](previews/rpg-destruction.gif) |
+| **🌀 Unit 1 start-up: the turbine spins up and syncs to the grid** | **🧯 Then see what failed, and which protection would have stopped it** |
+| ![Turbine spin-up](previews/turbine-spinup.gif) | ![Incident card](previews/incident-card.png) |
 
 <details>
 <summary><b>📸 More screenshots</b></summary>
@@ -39,7 +39,6 @@ simulation; it's a hands-on, gamified way to learn the basics.
 - 🚨 **Incident drill:** an attacker is stopping your cooling fans. Contain it before the turbine trips
 - 🕹️ **Pentest mode:** pick a foothold (phished PC, leaked password, old vendor login, forgotten modem, infected USB) and try to reach the cooling PLC before the SOC catches you
 - 🦠 **Stuxnet remix:** a Stuxnet-style attack on your plant. The HMI replays “normal” while the fans surge; catch it and recover with the golden copy
-- 🕵️ **Easter eggs:** hidden around the plant. Some of them go boom.
 
 ## 📚 Learn
 - 🏭 **Walk the plant** in first person: control building stacked by Purdue level, turbine hall, wellfield,
@@ -74,7 +73,7 @@ training certification, or authoritative reference.
 - **Defensive focus.** Attack scenarios show *why* controls exist and how defenders detect and respond.
   The lab contains no working exploit code and performs no real network activity. Only test systems you
   own or are explicitly authorized to test.
-- **Cartoon destruction.** Explosions and the hidden easter eggs are game effects, included to show why
+- **Cartoon destruction.** Explosions are game effects, included to show why
   physical security and safety systems matter.
 - **No data collected.** The lab runs entirely in your browser. Progress is saved only in your own
   browser's local storage. Nothing is sent to a server.
